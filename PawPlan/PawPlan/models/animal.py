@@ -1,5 +1,3 @@
-from django.db import models
-
 class Animal(models.Model):
     SEX_CHOICES = [('M', 'Make'), ('F', 'Female')]
     INTAKE_CHOICES = ['']
@@ -17,4 +15,3 @@ class Animal(models.Model):
     isFixed = models.BooleanField()
     vaccinations = models.ManyToManyField('Vaccine', blank=True)
     readyToAdopt = models.BooleanField()
-
