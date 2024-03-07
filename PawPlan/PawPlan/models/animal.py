@@ -15,3 +15,4 @@ class Animal(models.Model):
     isFixed = models.BooleanField()
     vaccinations = models.ManyToManyField('Vaccine', blank=True)
     readyToAdopt = models.BooleanField()
+    shelter = models.ForeignKey(Shelter, on_delete=models.CASCADE)
