@@ -10,6 +10,10 @@ from .person import Person
 from .comment import Comment
 from .animal import Animal
 from .shelter import Shelter
+import csv
+from faker import Faker
+from datetime import datetime, timedelta
+from random import choice
 
 
 class Task(models.Model):
@@ -87,3 +91,82 @@ class HealthCheckTask(AnimalTask):
 
     health_check_notes = models.TextField()
     results = models.TextField()
+
+
+if __name__ == "__main__":
+
+    fake = Faker()
+    tasks_data = []
+
+    # get the dummy data from csv
+    this_dir = Path(__file__).parent
+    dummy_fp = this_dir.parent / "dummy_data" / "dummy_tasks.csv"
+    with open("dummy_tasks.csv", "r") as file:
+        reader = csv.reader(file)
+        next(reader)  # Skip header row
+        for row in reader:
+            tasks_data.append(row)
+
+    # Create dummy tasks
+    for data in tasks_data:
+        task_type = data[0]
+        title = data[1]
+        description = data[2]
+        due_date = datetime.now() + timedelta(
+            days=int(data[fake.random_int(min=3, max=30)])
+        )
+        required_role = choice(["MA", "RE", "VO"])
+
+        if task_type == "Task":
+            task = Task.objects.create(
+                title=title,
+                description=description,
+                due_date=due_date,
+                required_role=required_role,
+            )
+        elif task_type == "AnimalTask":
+            animal = Animal.objects.get(id=int(data[4]))
+            task = AnimalTask.objects.create(
+                title=title,
+                description=description,
+                due_date=due_date,
+                required_role=required_role,
+                animal=animal,
+            )
+        elif task_type == "MicrochippingTask":
+            animal = Animal.objects.get(id=int(data[4]))
+            chip_ID = fake.random_int(min=1000000000, max=9999999999)
+            task = MicrochippingTask.objects.create(
+                title=title,
+                description=description,
+                due_date=due_date,
+                required_role=required_role,
+                animal=animal,
+                chip_ID=chip_ID,
+            )
+        elif task_type == "VaccinationTask":
+            animal = Animal.objects.get(id=int(data[4]))
+            vaccine_type = fake.word()
+            protocol = fake.text()
+            task = VaccinationTask.objects.create(
+                title=title,
+                description=description,
+                due_date=due_date,
+                required_role=required_role,
+                animal=animal,
+                vaccine_type=vaccine_type,
+                protocol=protocol,
+            )
+        elif task_type == "HealthCheckTask":
+            animal = Animal.objects.get(id=int(data[4]))
+            health_check_notes = fake.text()
+            results = fake.text()
+            task = HealthCheckTask.objects.create(
+                title=title,
+                description=description,
+                due_date=due_date,
+                required_role=required_role,
+                animal=animal,
+                health_check_notes=health_check_notes,
+                results=results,
+            )
