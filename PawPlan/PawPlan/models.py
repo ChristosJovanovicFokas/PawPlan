@@ -1,3 +1,6 @@
+from django.db import models
+
+
 class Address(models.Model):
     #fields(street 1, city, state, postal code, country)
     street1 = models.TextField(max_length=30)
