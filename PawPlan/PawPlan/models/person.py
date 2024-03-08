@@ -22,9 +22,7 @@ class Worker(Person):
     }
 
     username = models.CharField(max_length=100)
-    
-    role = ROLE_CHOICES
-    
+    role = models.CharField(max_length=2, choices=ROLE_CHOICES)
     hireDate = models.DateField()
     
 class Adopter(Person):
