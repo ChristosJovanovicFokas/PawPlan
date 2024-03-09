@@ -1,1 +1,3 @@
 # SeniorProject - Group
+
+## Quick Start
