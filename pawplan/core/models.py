@@ -63,6 +63,9 @@ class Person(PolymorphicModel):
     email = models.CharField(max_length=100)
     address = models.ForeignKey(Address, on_delete=models.CASCADE)
 
+    def __str__(self):
+        return f"{self.name} ({self.__class__.__name__})"
+
 
 class Worker(Person):
     """
@@ -163,6 +166,9 @@ class Animal(PolymorphicModel):
     sex = models.CharField(max_length=1, choices=SEX_CHOICES, blank=True)
     ready_to_adopt = models.BooleanField()
     shelter = models.ForeignKey(Shelter, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.name} ({self.animal_type})"
 
     @property
     def animal_type(self):
