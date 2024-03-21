@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Animal
+from .models import Animal, Task, AnimalTask
 
 # Create your views here.
 
@@ -9,3 +9,14 @@ def animal_list(request):
     return render(request, "animals.html", {
         'animals' : animal
     })
+
+
+def worker_dash(request):
+    tasks = Task.objects.all()
+    return render(
+        request,
+        "worker_dashboard.html",
+        {
+            "tasks": tasks,
+        },
+    )
