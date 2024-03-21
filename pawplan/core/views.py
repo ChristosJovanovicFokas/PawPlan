@@ -3,12 +3,11 @@ from .models import Animal, Task, AnimalTask
 
 # Create your views here.
 
+
 def animal_list(request):
     animal = Animal.objects.all()[:10]
 
-    return render(request, "animals.html", {
-        'animals' : animal
-    })
+    return render(request, "animals.html", {"animals": animal})
 
 
 def worker_dash(request):
@@ -21,5 +20,10 @@ def worker_dash(request):
         },
     )
 
+
 def about_view(request):
-    return render(request, 'about.html')
+    return render(request, "about.html")
+
+
+def home(request):
+    return render(request, "home.html")

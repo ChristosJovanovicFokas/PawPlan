@@ -22,8 +22,9 @@ from core import views
 from core import views
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('animals', views.animal_list, name='animal_list'),
+    path("admin/", admin.site.urls),
+    path("", views.home, name="home"),
+    path("animals", views.animal_list, name="animal_list"),
     path("dashboard/", views.worker_dash, name="worker_dash"),
-    path('about/', views.about_view, name='about'),
+    path("about/", views.about_view, name="about"),
 ]
