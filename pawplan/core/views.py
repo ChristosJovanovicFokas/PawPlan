@@ -12,3 +12,11 @@ def worker_dash(request):
             "tasks": tasks,
         },
     )
+
+def home(request):
+    
+    return render(
+        request, 
+        "home.html",
+        {}
+    )
