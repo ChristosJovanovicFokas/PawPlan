@@ -17,11 +17,17 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path
+from core import views
 
 from core import views
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
+    path('admin/', admin.site.urls),
+    path('animals', views.animal_list, name='animal_list'),
     path("dashboard/", views.worker_dash, name="worker_dash"),
+<<<<<<< HEAD
     path("", views.home, name="home"),
+=======
+    path('about/', views.about_view, name='about'),
+>>>>>>> 71c77bfc009366c915687dfdc03aa93353e7ba52
 ]
