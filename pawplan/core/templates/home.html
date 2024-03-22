@@ -1,4 +1,8 @@
 <!DOCTYPE html>
+<<<<<<< HEAD
+=======
+{% load static %}
+>>>>>>> 02a38d4cf6bcc6ec72386a337a8e567805eab23d
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -9,6 +13,7 @@
 <table width="100%" cellpadding="0" cellspacing="0" border="0">
     <tr>
         <td align="left" valign="middle">
+<<<<<<< HEAD
             <img src="PawPlan.png" alt="Logo" width="100" height="auto" style="display: block; padding: 10px;">
         </td>
         <td align="center" valign="middle">
@@ -26,5 +31,24 @@
 </table>
 <img src="Dog1.png" alt="Dog 1" width="500" height="300">
 <img src="Dog2.png" alt="Dog 2" width="500" height="300">
+=======
+            <img src="{% static 'images/Logo.png'}" alt="Logo" width="100" height="auto" style="display: block; padding: 10px;">
+        </td>
+        <td align="center" valign="middle">
+            <a href="{% url 'home'%}"> Home </a>
+            <a href="{% url 'adopt'%}"> Adopt </a>
+            <a href="{% url 'about'%}"> About Us </a>
+        </td>
+        <td align="right">
+            <a href="{% url 'login' %}">Login</a>
+        </td>
+        <td align="right" valign="middle">
+            <img src="{% static 'images/Login.png'}" alt="Login logo" width="80" height="auto" style="display: block; padding: 10px;">
+        </td>
+    </tr>
+</table>
+<img src="{% static 'images/Dog1.png'}" alt="Dog 1"width="500" height="300">
+<img src="{% static 'images/Dog2.png'}" alt="Dog 2" width="500" height="300">
+>>>>>>> 02a38d4cf6bcc6ec72386a337a8e567805eab23d
 </body>
 </html>
