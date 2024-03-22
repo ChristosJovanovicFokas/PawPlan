@@ -18,16 +18,16 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from core import views
-
+from django.conf.urls.static import static
 from core import views
+from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('animals', views.animal_list, name='animal_list'),
     path("dashboard/", views.worker_dash, name="worker_dash"),
-<<<<<<< HEAD
     path("", views.home, name="home"),
-=======
     path('about/', views.about_view, name='about'),
->>>>>>> 71c77bfc009366c915687dfdc03aa93353e7ba52
-]
+    path('adopt/', views.adopt, name='adopt'),
+    path('login/', views.login, name='login')
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

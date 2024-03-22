@@ -21,7 +21,6 @@ def worker_dash(request):
         },
     )
 
-<<<<<<< HEAD
 def home(request):
     
     return render(
@@ -29,7 +28,22 @@ def home(request):
         "home.html",
         {}
     )
-=======
+
+def adopt(request):
+    
+    return render(
+        request,
+        'adopt.html',
+        {}
+    )
+
 def about_view(request):
     return render(request, 'about.html')
->>>>>>> 71c77bfc009366c915687dfdc03aa93353e7ba52
+
+def login(request):
+
+    return render(
+        request,
+        'login.html',
+        {}
+    )
