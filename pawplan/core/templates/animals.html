@@ -1,18 +1,40 @@
+<!DOCTYPE html>
 {% block content %}
 <html>
-    
-    <div>
-        {% for animal in animals %}
-            <div>
-                <p>Animal {{ forloop.counter }}</p>
-                <p>Name: {{ animal.name }}</p>
-                <p>Sex: {{ animal.sex }}</p>
-                <p>Color: {{ animal.color }}</p>
-                <p>Age: {{ animal.age }}</p>
-                <p>Description: {{ animal.description }}</p>
-            </div> 
-        {% endfor %}
-    </div>
-
+    <head>
+        <link rel="stylesheet" href="static/css/animal.css">
+    </head>
+    <body>
+        <div>Location</div>
+        <ul>
+            {% for option in locationOptions %}
+            <li><input type="checkbox">{{ option }}</li>
+            {% endfor %}
+        </ul>
+        <div>Color</div>
+        <ul>
+            {% for option in colorOptions %}
+            <li><input type="checkbox">{{ option }}</li>
+            {% endfor %}
+        </ul>
+        <div>Sex</div>
+        <ul>
+            {% for option in sexOptions %}
+            <li><input type="checkbox">{{ option }}</li>
+            {% endfor %}
+        </ul>
+        <button>Apply Filters</button>
+        <div>
+            <ul>
+                {% for animal in animals %}
+                <li>
+                    <a href="#">
+                        <div>{{animal.name}}</div>
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </body>
 </html>
 {% endblock %}
