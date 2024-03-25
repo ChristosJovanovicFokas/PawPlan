@@ -16,3 +16,10 @@ def animal_list(request):
         'colorOptions' : colorOptions,
         'locationOptions' : locationOptions
     })
+
+def animal(request, pet_id):
+    animal = Animal.objects.get(pk=pet_id)
+
+    return render(request, "animal.html", {
+        'animal' : animal
+    })

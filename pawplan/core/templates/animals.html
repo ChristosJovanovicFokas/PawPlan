@@ -8,7 +8,7 @@
         <div>Location</div>
         <ul>
             {% for option in locationOptions %}
-            <li><input type="checkbox">{{ option }}</li>
+            <li><input name="location" type="checkbox" value="{{ option }}">{{ option }}</li>
             {% endfor %}
         </ul>
         <div>Color</div>
@@ -28,7 +28,7 @@
             <ul>
                 {% for animal in animals %}
                 <li>
-                    <a href="#">
+                    <a href="animal/{{ animal.id }}">
                         <div>{{animal.name}}</div>
                     </a>
                 </li>
