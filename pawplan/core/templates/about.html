@@ -1,1 +1,27 @@
+{% block content %}
+{% load static %}
 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us</title>
+    <link rel="stylesheet" href="{% static '/css/about.css' %}">
+</head>
+<body>
+    <div class="container">
+        <div class="title">
+            <h1>About Us</h1>
+        </div>
+        <div class="content">
+            <img src="{% static '/images/dog.jpg' %}" alt="About Us Image">
+            <p>
+                Welcome to PawPlan, where compassion meets care for our furry friends! Established with a profound love for animals, we are a dedicated team committed to providing a safe haven for homeless pets in need.
+                At PawPlan, we believe that every animal deserves a chance at a happy and fulfilling life. Whether they're abandoned, neglected, or surrendered, we welcome them with open arms and open hearts.  Our shelters are more than just a temporary stop for these animals - it's a place where they receive the love, attention, and medical care they need to thrive. From basic necessities like food and shelter to medical treatment and training, we go above and beyond to ensure each animal's well-being.
+                But we can't do it alone. We rely on the support of our community and volunteers to continue our life-saving work. Whether you're looking to adopt or volunteer, your involvement makes a world of difference to the animals in our care.
+                Thank you for considering PawPlan as your partner in saving lives and making a difference in the world of animal welfare. Together, we can create a brighter future for all our furry friends.
+            </p>
+        </div>
+    </div>
+</body>
+</html>
+{% endblock %}
