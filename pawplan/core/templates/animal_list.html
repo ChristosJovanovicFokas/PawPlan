@@ -25,7 +25,7 @@
             {% endfor %}
         </ul>
         <button hx-get="{% url 'animals' %}" hx-trigger="click" hx-target="#animals" hx-include="[name='color'], [name='location'], [name='sex']">Apply Filters</button>
-        <div id="animals">
+        <div id="animals" hx-get="{% url 'animals' %}"hx-trigger="load">
         </div>
     </body>
 </html>
