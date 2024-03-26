@@ -20,6 +20,9 @@ from core import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('animals', views.animal_list, name='animal_list'),
-    path('animal/<int:pet_id>', views.animal, name='animal')
+    path('animal_list', views.animal_list, name='animal_list'),
+    path('animal/<int:pet_id>', views.animal, name='animal'),
+
+    # Partials URLS
+    path('animals', views.animals, name='animals'),
 ]

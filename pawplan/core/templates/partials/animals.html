@@ -1,0 +1,11 @@
+<div>
+    <ul>
+        {% for animal in animals %}
+        <li>
+            <a href="animal/{{ animal.id }}">
+                <div>{{animal.name}}</div>
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+</div>

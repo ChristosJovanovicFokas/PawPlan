@@ -3,9 +3,9 @@
 <html>
     <head>
         <link rel="stylesheet" href="static/css/animal.css">
+        <script src="https://unpkg.com/htmx.org@1.9.10"></script>
     </head>
-    <body>
-        <form method="get">
+    <body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
         <div>Location</div>
         <ul>
             {% for option in locationOptions %}
@@ -24,18 +24,8 @@
             <li><input name="sex" type="checkbox" value="{{ option }}">{{ option }}</li>
             {% endfor %}
         </ul>
-        <button type="submit">Apply Filters</button>
-        </form>
-        <div>
-            <ul>
-                {% for animal in animals %}
-                <li>
-                    <a href="animal/{{ animal.id }}">
-                        <div>{{animal.name}}</div>
-                    </a>
-                </li>
-                {% endfor %}
-            </ul>
+        <button hx-get="{% url 'animals' %}" hx-trigger="click" hx-target="#animals" hx-include="[name='color'], [name='location'], [name='sex']">Apply Filters</button>
+        <div id="animals">
         </div>
     </body>
 </html>

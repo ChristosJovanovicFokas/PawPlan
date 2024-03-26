@@ -9,8 +9,16 @@ def animal_list(request):
     colorOptions = list(Animal.objects.order_by().values_list('color', flat=True).distinct())
     locationOptions = list(Shelter.objects.order_by().values_list('name', flat=True).distinct())
 
+    return render(request, "animal_list.html", {
+        'sexOptions' : sexOptions,
+        'colorOptions' : colorOptions,
+        'locationOptions' : locationOptions
+    })
+
+def animals(request):
+
     if request.method == "GET":
-    
+        print(request.GET)
         params = dict(request.GET)
         query = {}
         for param in params:
@@ -23,11 +31,8 @@ def animal_list(request):
         print(query)
         animal = Animal.objects.filter(**query)
 
-        return render(request, "animals.html", {
-            'animals' : animal,
-            'sexOptions' : sexOptions,
-            'colorOptions' : colorOptions,
-            'locationOptions' : locationOptions
+        return render(request, 'partials/animals.html', {
+            'animals' : animal
         })
 
 def animal(request, pet_id):
