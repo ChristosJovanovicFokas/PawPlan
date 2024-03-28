@@ -1,0 +1,19 @@
+{% block content %}
+<div>
+    {% for task in tasks %}
+        <h1> {{task.title}} </h1>
+        <p> {{task.description}} </p>
+        <p>Shelter: {{task.shelter}} </p>
+        <p>Assignee: {{task.assignee}} </p>
+        <p>Due: {{task.due_date}} </p>
+        <p>Completed: {{task.completion_datetime}} </p>
+        <p>Created: {{task.creation_datetime}} </p>
+        <p>Role: {{task.required_role}} </p>
+        <p>Is Complete: {{task.is_completed}} </p>
+    {% endfor %}
+</div>
+<!--
+    Add task
+<a href='{% url "add_task" %}'> Add a new task </a>
+-->
+{% endblock %}

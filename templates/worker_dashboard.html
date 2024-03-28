@@ -1,0 +1,8 @@
+{% block content %}
+<div>
+    {% for task in tasks %}
+        <h1> {{task.title}} </h1>
+        <p> {{task.description}} </p>
+    {% endfor %}
+</div>
+{% endblock %}

@@ -1,8 +1,11 @@
 from django.shortcuts import render
-from .models import Animal, Shelter
+
 from django.core.paginator import Paginator
 
+from .models import Animal, Task, AnimalTask
+
 # Create your views here.
+
 
 def animal_list(request):
 
@@ -46,3 +49,32 @@ def animal(request, pet_id):
     return render(request, "animal.html", {
         'animal' : animal
     })
+
+def worker_dash(request):
+    tasks = Task.objects.all()
+    return render(
+        request,
+        "worker_dashboard.html",
+        {
+            "tasks": tasks,
+        },
+    )
+
+
+def home(request):
+
+    return render(request, "home.html", {})
+
+
+def adopt(request):
+
+    return render(request, "adopt.html", {})
+
+
+def about_view(request):
+    return render(request, "about.html")
+
+
+def login(request):
+
+    return render(request, "login.html", {})
