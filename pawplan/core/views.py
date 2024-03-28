@@ -1,5 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
+from django.views.decorators.http import require_POST
 from .models import Animal, Task, Worker
+from .forms import TaskForm
 
 # Create your views here.
 
@@ -91,3 +93,22 @@ def sort_tasks(request):
     tasks = Task.objects.all().order_by(sort_key)
 
     return render(request, "task_list.html", {"tasks": tasks})
+
+
+def edit_task(request, task_id):
+    task = get_object_or_404(Task, id=task_id)
+    if request.method == "POST":
+        form = TaskForm(request.POST, instance=task)
+        if form.is_valid():
+            form.save()
+            return redirect("tasks_list")  # Redirect to the tasks list
+    else:
+        form = TaskForm(instance=task)
+    return render(request, "edit_task.html", {"form": form})
+
+
+@require_POST
+def delete_task(request, task_id):
+    task = get_object_or_404(Task, id=task_id)
+    task.delete()
+    return redirect("tasks_list")  # Redirect to the tasks list
