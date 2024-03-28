@@ -1,14 +1,34 @@
+{% extends 'base.html' %}
+
 {% block content %}
 <script src="https://unpkg.com/htmx.org@latest"></script>
 <div>
     <form hx-post="{% url 'filter_tasks' %}" hx-target="#task-list">
-        {% csrf_token %} 
-        <label for="filter">Filter:</label>
-        <select id="filter" name="filter">
+        {% csrf_token %}
+
+        <label for="completion-status">Completion Status:</label>
+        <select id="completion-status" name="completion_status">
             <option value="">All</option>
             <option value="completed">Completed</option>
             <option value="incomplete">Incomplete</option>
         </select>
+
+        <label for="assignee">Assignee:</label>
+        <select id="assignee" name="assignee">
+            <option value="">All</option>
+            {% for worker in workers %}
+            <option value="{{ worker.id }}">{{ worker.name }}</option>
+            {% endfor %}
+        </select>
+
+        <label for="animal">Animal:</label>
+        <select id="animal" name="animal">
+            <option value="">All</option>
+            {% for animal in animals %}
+            <option value="{{ animal.id }}">{{ animal.name }}</option>
+            {% endfor %}
+        </select>
+
         <button type="submit">Apply Filter</button>
     </form>
 
@@ -24,17 +44,8 @@
     </form>
 
     <div id="task-list">
-        {% for task in tasks %}
-            <h1> {{task.title}} </h1>
-            <p> {{task.description}} </p>
-            <p>Shelter: {{task.shelter}} </p>
-            <p>Assignee: {{task.assignee}} </p>
-            <p>Due: {{task.due_date}} </p>
-            <p>Completed: {{task.completion_datetime}} </p>
-            <p>Created: {{task.creation_datetime}} </p>
-            <p>Role: {{task.required_role}} </p>
-            <p>Is Complete: {{task.is_completed}} </p>
-        {% endfor %}
+        <!-- include task_list.html dynamically -->
+        {% include 'task_list.html' %}
     </div>
 </div>
 {% endblock %}

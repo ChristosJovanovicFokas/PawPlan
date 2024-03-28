@@ -1,0 +1,16 @@
+<!-- task_list.html -->
+{% for task in tasks %}
+    <div class="task">
+        <h1>{{ task.title }}</h1>
+        <p>{{ task.description }}</p>
+        <p>Shelter: {{ task.shelter }}</p>
+        <p>Assignee: {{ task.assignee }}</p>
+        <p>Due: {{ task.due_date }}</p>
+        <p>Completed: {{ task.completion_datetime }}</p>
+        <p>Created: {{ task.creation_datetime }}</p>
+        <p>Role: {{ task.required_role }}</p>
+        <p>Is Complete: {{ task.is_completed }}</p>
+    </div>
+{% empty %}
+    <p>No tasks found.</p>
+{% endfor %}

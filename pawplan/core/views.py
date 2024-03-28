@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Animal, Task, AnimalTask
+from .models import Animal, Task, Worker
 
 # Create your views here.
 
@@ -13,11 +13,15 @@ def animal_list(request):
 def worker_dash(request):
     tasks = Task.objects.all()
     animals = Animal.objects.all()
+    workers = Worker.objects.all()
+
     return render(
         request,
         "worker_dashboard.html",
         {
             "tasks": tasks,
+            "animals": animals,
+            "workers": workers,
         },
     )
 
@@ -48,16 +52,26 @@ def filter_tasks(request):
     Additional filtering logic can be added as needed. See worker_dashboard.html for an idea of
     how to structure the form that will send the POST request.
     """
-    filter_value = request.POST.get("filter")
-    if filter_value == "completed":
-        tasks = Task.objects.filter(completion_datetime__isnull=False)
-    elif filter_value == "incomplete":
-        tasks = Task.objects.filter(completion_datetime__isnull=True)
-    else:
-        tasks = Task.objects.all()
+    completion_status = request.POST.get("filter")
+    assignee = request.POST.get("assignee")
+    animal = request.POST.get("animal")
 
-    # Assuming you have a 'tasks/task_list.html' template to render just the task list part
-    return render(request, "tasks/task_list.html", {"tasks": tasks})
+    filter_params = {}
+
+    if completion_status == "completed":
+        filter_params["completion_datetime__isnull"] = False
+    elif completion_status == "incomplete":
+        filter_params["completion_datetime__isnull"] = True
+
+    if assignee:
+        filter_params["assignee"] = assignee
+
+    if animal:
+        filter_params["animal"] = animal
+
+    tasks = Task.objects.filter(**filter_params)
+
+    return render(request, "task_list.html", {"tasks": tasks})
 
 
 def sort_tasks(request):
@@ -69,12 +83,11 @@ def sort_tasks(request):
     """
     sort_value = request.POST.get("sort")
 
-    # Define a default sort in case of unexpected sort values
+    # default sort in case of unexpected sort values
     sort_key = "title"
     if sort_value in ["due_date", "creation_datetime"]:
         sort_key = sort_value
 
     tasks = Task.objects.all().order_by(sort_key)
 
-    # Assuming you have a 'tasks/task_list.html' template to render just the task list part
-    return render(request, "tasks/task_list.html", {"tasks": tasks})
+    return render(request, "task_list.html", {"tasks": tasks})
