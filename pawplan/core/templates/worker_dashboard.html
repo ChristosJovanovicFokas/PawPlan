@@ -1,19 +1,40 @@
 {% block content %}
+<script src="https://unpkg.com/htmx.org@latest"></script>
 <div>
-    {% for task in tasks %}
-        <h1> {{task.title}} </h1>
-        <p> {{task.description}} </p>
-        <p>Shelter: {{task.shelter}} </p>
-        <p>Assignee: {{task.assignee}} </p>
-        <p>Due: {{task.due_date}} </p>
-        <p>Completed: {{task.completion_datetime}} </p>
-        <p>Created: {{task.creation_datetime}} </p>
-        <p>Role: {{task.required_role}} </p>
-        <p>Is Complete: {{task.is_completed}} </p>
-    {% endfor %}
+    <form hx-post="{% url 'filter_tasks' %}" hx-target="#task-list">
+        {% csrf_token %} 
+        <label for="filter">Filter:</label>
+        <select id="filter" name="filter">
+            <option value="">All</option>
+            <option value="completed">Completed</option>
+            <option value="incomplete">Incomplete</option>
+        </select>
+        <button type="submit">Apply Filter</button>
+    </form>
+
+    <form hx-post="{% url 'sort_tasks' %}" hx-target="#task-list">
+        {% csrf_token %} 
+        <label for="sort">Sort:</label>
+        <select id="sort" name="sort">
+            <option value="title">Title</option>
+            <option value="due_date">Due Date</option>
+            <option value="creation_datetime">Creation Date</option>
+        </select>
+        <button type="submit">Apply Sort</button>
+    </form>
+
+    <div id="task-list">
+        {% for task in tasks %}
+            <h1> {{task.title}} </h1>
+            <p> {{task.description}} </p>
+            <p>Shelter: {{task.shelter}} </p>
+            <p>Assignee: {{task.assignee}} </p>
+            <p>Due: {{task.due_date}} </p>
+            <p>Completed: {{task.completion_datetime}} </p>
+            <p>Created: {{task.creation_datetime}} </p>
+            <p>Role: {{task.required_role}} </p>
+            <p>Is Complete: {{task.is_completed}} </p>
+        {% endfor %}
+    </div>
 </div>
-<!--
-    Add task
-<a href='{% url "add_task" %}'> Add a new task </a>
--->
 {% endblock %}
