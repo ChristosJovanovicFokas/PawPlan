@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from .models import Animal, Shelter
+from django.core.paginator import Paginator
 
 # Create your views here.
 
@@ -18,8 +19,8 @@ def animal_list(request):
 def animals(request):
 
     if request.method == "GET":
-        print(request.GET)
         params = dict(request.GET)
+        print(request.GET)
         query = {}
         for param in params:
             if param == 'location':
@@ -28,8 +29,12 @@ def animals(request):
                 query.update({'color__in' : params.get(param)})
             if param == 'sex':
                 query.update({'sex__in' : params.get(param)})
-        print(query)
-        animal = Animal.objects.filter(**query)
+
+        p = Paginator(Animal.objects.filter(**query), 2)
+        page = request.GET.get('page')
+        animal = p.get_page(page)
+
+        # animal = Animal.objects.filter(**query)
 
         return render(request, 'partials/animals.html', {
             'animals' : animal

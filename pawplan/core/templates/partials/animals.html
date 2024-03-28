@@ -1,4 +1,4 @@
-<div>
+<div id="animal">
     <ul>
         {% for animal in animals %}
         <li>
@@ -7,5 +7,20 @@
             </a>
         </li>
         {% endfor %}
+        Page {{animals.number}} out of {{animals.paginator.num_pages}}
+        {% if animals.has_previous %}
+        <button hx-get="{% url 'animals' %}" 
+        hx-trigger="click" 
+        hx-target="#animal" 
+        hx-include="[name='color'], [name='location'], [name='sex']"
+        hx-vals='{"page":"{{animals.previous_page_number}}"}'>Previous</button>
+        {% endif %}
+        {% if animals.has_next %}
+        <button hx-get="{% url 'animals' %}" 
+        hx-trigger="click" 
+        hx-target="#animal" 
+        hx-include="[name='color'], [name='location'], [name='sex']"
+        hx-vals='{"page":"{{animals.next_page_number}}"}'>Next</button>
+        {% endif %}
     </ul>
 </div>

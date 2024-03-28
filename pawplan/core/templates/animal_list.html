@@ -9,22 +9,33 @@
         <div>Location</div>
         <ul>
             {% for option in locationOptions %}
-            <li><input name="location" type="checkbox" value="{{ option }}">{{ option }}</li>
+            <li><input hx-get="{% url 'animals' %}" 
+                    hx-trigger="click" 
+                    hx-target="#animals" 
+                    hx-include="[name='color'], [name='location'], [name='sex']" 
+                    name="location" type="checkbox" value="{{ option }}">{{ option }}</li>
             {% endfor %}
         </ul>
         <div>Color</div>
         <ul>
             {% for option in colorOptions %}
-            <li><input name="color" type="checkbox" value="{{ option }}">{{ option }}</li>
+            <li><input hx-get="{% url 'animals' %}" 
+                hx-trigger="click" 
+                hx-target="#animals" 
+                hx-include="[name='color'], [name='location'], [name='sex']" 
+                name="color" type="checkbox" value="{{ option }}">{{ option }}</li>
             {% endfor %}
         </ul>
         <div>Sex</div>
         <ul>
             {% for option in sexOptions %}
-            <li><input name="sex" type="checkbox" value="{{ option }}">{{ option }}</li>
+            <li><input hx-get="{% url 'animals' %}" 
+                hx-trigger="click" 
+                hx-target="#animals" 
+                hx-include="[name='color'], [name='location'], [name='sex']" 
+                name="sex" type="checkbox" value="{{ option }}">{{ option }}</li>
             {% endfor %}
         </ul>
-        <button hx-get="{% url 'animals' %}" hx-trigger="click" hx-target="#animals" hx-include="[name='color'], [name='location'], [name='sex']">Apply Filters</button>
         <div id="animals" hx-get="{% url 'animals' %}"hx-trigger="load">
         </div>
     </body>
