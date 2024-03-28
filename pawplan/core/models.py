@@ -25,6 +25,9 @@ class Address(models.Model):
     postal = models.TextField(max_length=20)
     country = models.TextField(max_length=10)
 
+    def __str__(self):
+        return f"{self.street1}, {self.city}, {self.state} {self.postal}"
+
 
 class Shelter(models.Model):
     """
@@ -42,6 +45,9 @@ class Shelter(models.Model):
     phone_number = models.CharField(max_length=20)
     email_address = models.EmailField()
     address = models.ForeignKey(Address, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name
 
 
 class Person(PolymorphicModel):
@@ -62,6 +68,9 @@ class Person(PolymorphicModel):
     phone_number = models.CharField(max_length=100)
     email = models.CharField(max_length=100)
     address = models.ForeignKey(Address, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name
 
 
 class Worker(Person):
@@ -182,6 +191,9 @@ class Animal(PolymorphicModel):
                     animal=self,
                 )
                 automatic_task.save()
+
+    def __str__(self):
+        return self.name
 
 
 class Dog(Animal):
@@ -351,6 +363,9 @@ class Task(models.Model):
     @property
     def is_completed(self):
         return self.completion_datetime is not None
+
+    def __str__(self):
+        return self.title
 
 
 class AnimalTask(Task):
