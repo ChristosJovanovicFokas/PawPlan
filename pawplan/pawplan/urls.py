@@ -23,8 +23,12 @@ from core import views
 from django.conf import settings
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
-    path("animals", views.animal_list, name="animal_list"),
+
+    # Partials URLS
+    path('admin/', admin.site.urls),
+    path('animal_list', views.animal_list, name='animal_list'),
+    path('animal/<int:pet_id>', views.animal, name='animal'),
+    path('animals', views.animals, name='animals'),
     path("dashboard/", views.worker_dash, name="worker_dash"),
     path("", views.home, name="home"),
     path("about/", views.about_view, name="about"),
@@ -35,3 +39,4 @@ urlpatterns = [
     path("task/edit/<int:task_id>/", views.edit_task, name="edit_task"),
     path("task/delete/<int:task_id>/", views.delete_task, name="delete_task"),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+

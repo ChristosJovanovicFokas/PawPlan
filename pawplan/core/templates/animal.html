@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+{% block content %}
+<html>
+    <head>
+
+    </head>
+    <body>
+        <div>Name: {{ animal.name }}</div>
+        <div>Color: {{ animal.color }}</div>
+        <div>Sex: {{ animal.sex }}</div>
+        <div>Description: {{ animal.description }}</div>
+        <a href="{% url 'animal_list' %}">Back</a>
+    </body>
+    <form>
+        <label for="fname">Name:</label><br>
+        <input type="text" id="fname" name="fname"><br>
+        <label for="phone">Phone number:</label><br>
+        <input type="text" id="phone" name="phone"><br>
+        <label for="email">Email:</label><br>
+        <input type="text" id="email" name="email"><br>
+        <label for="street1">Street 1:</label><br>
+        <input type="text" id="street1" name="street1"><br>
+        <label for="street2">Street 2:</label><br>
+        <input type="text" id="street2" name="street2"><br>
+        <label for="city">City:</label><br>
+        <input type="text" id="city" name="city"><br>
+        <label for="state">State:</label><br>
+        <input type="text" id="state" name="state"><br>
+        <label for="postal">Postal:</label><br>
+        <input type="text" id="postal" name="postal"><br>
+        <label for="county">County:</label><br>
+        <input type="text" id="county" name="county"><br>  
+    </form>
+</html>
+{% endblock %}
