@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_POST
-from .models import Animal, Task, Worker
+from .models import Animal, Task, Worker, Shelter
 from .forms import TaskForm
 from django.core.paginator import Paginator
 
