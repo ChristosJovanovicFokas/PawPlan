@@ -1,4 +1,6 @@
 import datetime
+
+import requests
 import core.models as m
 from django.utils import timezone
 
@@ -139,6 +141,9 @@ for person in [dr_baliga, steve_p, steve_b, ricky_k, derek_p, connor_h, christos
 
 animal_list = []
 
+response = requests.get('https://random.dog/woof.json')
+img_info = dict(response.json())
+
 animal_list.append(m.Dog.objects.create(
     name="Bubba",
     color="black and brown",
@@ -150,7 +155,11 @@ animal_list.append(m.Dog.objects.create(
     ready_to_adopt=False,
     shelter=shelter,
     breed="Rotweiler",
+    image= img_info.get('url')
 ))
+
+response = requests.get('https://random.dog/woof.json')
+img_info = dict(response.json())
 
 animal_list.append(m.Cat.objects.create(
     name="Charlie",
@@ -163,7 +172,11 @@ animal_list.append(m.Cat.objects.create(
     ready_to_adopt=True,
     shelter=shelter,
     breed="Tabby",
+    image= img_info.get('url')
 ))
+
+response = requests.get('https://random.dog/woof.json')
+img_info = dict(response.json())
 
 animal_list.append(m.Cat.objects.create(
     name="Princess",
@@ -176,7 +189,11 @@ animal_list.append(m.Cat.objects.create(
     ready_to_adopt=False,
     shelter=shelter,
     breed="Tabby",
+    image= img_info.get('url')
 ))
+
+response = requests.get('https://random.dog/woof.json')
+img_info = dict(response.json())
 
 animal_list.append(m.Turtle.objects.create(
     name="Jennifer",
@@ -188,7 +205,11 @@ animal_list.append(m.Turtle.objects.create(
     ready_to_adopt=False,
     shelter=shelter,
     species="Red-eared Slider",
+    image= img_info.get('url')
 ))
+
+response = requests.get('https://random.dog/woof.json')
+img_info = dict(response.json())
 
 animal_list.append(m.Dog.objects.create(
     name="Larry",
@@ -201,7 +222,11 @@ animal_list.append(m.Dog.objects.create(
     ready_to_adopt=False,
     shelter=shelter,
     breed="Shepherd Mix",
+    image= img_info.get('url')
 ))
+
+response = requests.get('https://random.dog/woof.json')
+img_info = dict(response.json())
 
 animal_list.append(m.Dog.objects.create(
     name="Gadget",
@@ -214,7 +239,11 @@ animal_list.append(m.Dog.objects.create(
     ready_to_adopt=False,
     shelter=shelter,
     breed="Maltese",
+    image= img_info.get('url')
 ))
+
+response = requests.get('https://random.dog/woof.json')
+img_info = dict(response.json())
 
 animal_list.append(m.Dog.objects.create(
     name="Mitra",
@@ -227,7 +256,11 @@ animal_list.append(m.Dog.objects.create(
     ready_to_adopt=True,
     shelter=shelter,
     breed="Terrier Mix",
+    image= img_info.get('url')
 ))
+
+response = requests.get('https://random.dog/woof.json')
+img_info = dict(response.json())
 
 animal_list.append(m.Dog.objects.create(
     name="Rosie",
@@ -240,7 +273,11 @@ animal_list.append(m.Dog.objects.create(
     ready_to_adopt=True,
     shelter=shelter,
     breed="Shepherd Mix",
+    image= img_info.get('url')
 ))
+
+response = requests.get('https://random.dog/woof.json')
+img_info = dict(response.json())
 
 animal_list.append(m.Dog.objects.create(
     name="Hooch",
@@ -253,7 +290,11 @@ animal_list.append(m.Dog.objects.create(
     ready_to_adopt=False,
     shelter=shelter,
     breed="Terrier Mix",
+    image= img_info.get('url')
 ))
+
+response = requests.get('https://random.dog/woof.json')
+img_info = dict(response.json())
 
 animal_list.append(m.Dog.objects.create(
     name="Ella",
@@ -266,6 +307,7 @@ animal_list.append(m.Dog.objects.create(
     ready_to_adopt=True,
     shelter=shelter,
     breed="Maltese",
+    image= img_info.get('url')
 ))
 
 for animal in animal_list:
@@ -303,20 +345,20 @@ for task in [clean_toilets_task, post_jobs_task, feed_cats_task]:
 bubba_comment1 = m.AnimalComment.objects.create(
     person=steve_b,
     text="Bubba bit me",
-    animal=bubba,
+    animal=animal_list[0],
     time_stamp=timezone.now() - datetime.timedelta(hours=28),
 )
 
 bubba_comment2 = m.AnimalComment.objects.create(
     person=ricky_k,
     text="No way",
-    animal=bubba,
+    animal=animal_list[0],
     time_stamp=timezone.now() - datetime.timedelta(hours=27),
 )
 jennifer_coment1 = m.AnimalComment.objects.create(
     person=derek_p,
     text="Who named this turtle Jennifer",
-    animal=jennifer,
+    animal=animal_list[3],
     time_stamp=timezone.now() - datetime.timedelta(hours=41),
 )
 

@@ -166,7 +166,7 @@ class Animal(PolymorphicModel):
     color = models.CharField(max_length=30)
     intake_type = models.CharField(max_length=1, choices=INTAKE_CHOICES, blank=True)
     intake_date = models.DateTimeField(default=timezone.now())
-    image = models.ImageField(null=True)
+    image = models.CharField(max_length=300)
     age = models.IntegerField(null=True)
     description = models.TextField()
     sex = models.CharField(max_length=1, choices=SEX_CHOICES, blank=True)
