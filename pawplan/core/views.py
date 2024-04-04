@@ -1,7 +1,8 @@
+from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_POST
-from .models import Animal, Task, Worker, Shelter
-from .forms import TaskForm
+from .models import Animal, Task, Worker, Shelter, Person, Address, Adopter
+from .forms import TaskForm, AdoptionForm
 from django.core.paginator import Paginator
 
 # Create your views here.
@@ -45,8 +46,11 @@ def animals(request):
 def animal(request, pet_id):
     animal = Animal.objects.get(pk=pet_id)
 
+    adoptionForm = AdoptionForm()
+
     return render(request, "animal.html", {
-        'animal' : animal
+        'animal' : animal,
+        'adoptionForm' : adoptionForm
     })
 
 def worker_dash(request):
@@ -70,9 +74,60 @@ def home(request):
     return render(request, "home.html", {})
 
 
-def adopt(request):
+def adoption(request, pet_id):
+    if request.method == "POST":
+        form = AdoptionForm(request.POST)
+        if form.is_valid():
+            full_name = form.cleaned_data['name']
+            phone_number = form.cleaned_data['phone_number']
+            email = form.cleaned_data['email']
+            address_one = form.cleaned_data['address_one']
+            address_two = form.cleaned_data['address_two']
+            city = form.cleaned_data['city']
+            state = form.cleaned_data['state']
+            postal = form.cleaned_data['postal']
+            country = form.cleaned_data['country']
 
-    return render(request, "adopt.html", {})
+            # check if address is already in database. if not, insert into database.
+            if not Address.objects.filter(street1 = address_one, 
+                                          street2 = address_two, city = city, 
+                                          state = state, postal = postal, 
+                                          country = country).exists():
+                
+                address = Address.objects.create(
+                    street1=address_one,
+                    street2=address_two,
+                    city=city,
+                    state=state,
+                    postal=postal,
+                    country=country,
+                )
+                address.save()
+                print("Address added to database")
+
+            # check if person is already in database. if not, insert into database
+            if not Person.objects.filter(email = email).exists():
+                
+                address = Address.objects.get(street1 = address_one, 
+                                          street2 = address_two, city = city, 
+                                          state = state, postal = postal, 
+                                          country = country)
+                
+                print(address)
+                
+                adopter = Adopter.objects.create(
+                    name=full_name,
+                    phone_number=phone_number,
+                    email=email,
+                    address=address,
+                    can_adopt=True,
+                )
+                adopter.save()
+                print("Person added to database.")
+
+            person = Person.objects.get(email=email)
+
+    return HttpResponse(f"person id: {person.pk}, pet id: {pet_id}")
 
 
 def about_view(request):
