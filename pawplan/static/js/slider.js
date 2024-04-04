@@ -1,19 +1,17 @@
-let slider = document.querySelector('.slider');
-let slides = document.querySelectorAll('.slide');
-let slideIndex = 0;
+// static/slider.js
+document.addEventListener("DOMContentLoaded", function() {
+    var images = [
+        "{% static 'images/dogs/Dog1.png' %}",
+        "{% static 'images/dogs/Dog2.png' %}"
+    ];
+    var currentIndex = 0;
+    var slider = document.getElementById("slider");
 
-function nextSlide() {
-    slideIndex++;
-    if (slideIndex === slides.length) {
-        slideIndex = 0;
+    function rotateImage() {
+        slider.src = images[currentIndex];
+        currentIndex = (currentIndex + 1) % images.length;
     }
-    updateSlidePosition();
-}
 
-function updateSlidePosition() {
-    let offset = -slideIndex * slides[0].offsetWidth;
-    slider.style.transform = `translateX(${offset}px)`;
-}
+    setInterval(rotateImage, 3000); // Change image every 3 seconds
+});
 
-// Auto-advance slides every 3 seconds
-setInterval(nextSlide, 3000);
