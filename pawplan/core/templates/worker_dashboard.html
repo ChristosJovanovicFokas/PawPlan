@@ -1,7 +1,10 @@
+
 {% extends 'base.html' %}
 
 {% block content %}
+
 <script src="https://unpkg.com/htmx.org@latest"></script>
+
 <div>
     <form hx-post="{% url 'filter_tasks' %}" hx-target="#task-list">
         {% csrf_token %}
