@@ -8,7 +8,6 @@ from django.utils import timezone
 model_list = [
     m.TaskComment,
     m.AnimalComment,
-    m.AnimalTask,
     m.Task,
     m.Turtle,
     m.Cat,
@@ -137,178 +136,198 @@ for person in [dr_baliga, steve_p, steve_b, ricky_k, derek_p, connor_h, christos
     person.save()
 
 
-# Create new animal objects (which will also automatically create AnimalTask objects for each)
+# Create new animal objects (which will also automatically create Task objects for each)
 
 animal_list = []
 
-response = requests.get('https://random.dog/woof.json')
+response = requests.get("https://random.dog/woof.json")
 img_info = dict(response.json())
 
-animal_list.append(m.Dog.objects.create(
-    name="Bubba",
-    color="black and brown",
-    intake_type="S",
-    age=3,
-    description="A very large, very friendly dog. Loves cats and children.",
-    sex="M",
-    is_fixed=False,
-    ready_to_adopt=False,
-    shelter=shelter,
-    breed="Rotweiler",
-    image= img_info.get('url')
-))
+animal_list.append(
+    m.Dog.objects.create(
+        name="Bubba",
+        color="black and brown",
+        intake_type="S",
+        age=3,
+        description="A very large, very friendly dog. Loves cats and children.",
+        sex="M",
+        is_fixed=False,
+        ready_to_adopt=False,
+        shelter=shelter,
+        breed="Rotweiler",
+        image=img_info.get("url"),
+    )
+)
 
-response = requests.get('https://random.dog/woof.json')
+response = requests.get("https://random.dog/woof.json")
 img_info = dict(response.json())
 
-animal_list.append(m.Cat.objects.create(
-    name="Charlie",
-    color="tuxedo",
-    intake_type="C",
-    age=5,
-    description="A small, playful cat who loves people but doesn't like other cats.",
-    sex="M",
-    is_fixed=True,
-    ready_to_adopt=True,
-    shelter=shelter,
-    breed="Tabby",
-    image= img_info.get('url')
-))
+animal_list.append(
+    m.Cat.objects.create(
+        name="Charlie",
+        color="tuxedo",
+        intake_type="C",
+        age=5,
+        description="A small, playful cat who loves people but doesn't like other cats.",
+        sex="M",
+        is_fixed=True,
+        ready_to_adopt=True,
+        shelter=shelter,
+        breed="Tabby",
+        image=img_info.get("url"),
+    )
+)
 
-response = requests.get('https://random.dog/woof.json')
+response = requests.get("https://random.dog/woof.json")
 img_info = dict(response.json())
 
-animal_list.append(m.Cat.objects.create(
-    name="Princess",
-    color="orange",
-    intake_type="C",
-    age=2,
-    description="A beautiful but mean cat who hates everyone. Patient owners required.",
-    sex="F",
-    is_fixed=True,
-    ready_to_adopt=False,
-    shelter=shelter,
-    breed="Tabby",
-    image= img_info.get('url')
-))
+animal_list.append(
+    m.Cat.objects.create(
+        name="Princess",
+        color="orange",
+        intake_type="C",
+        age=2,
+        description="A beautiful but mean cat who hates everyone. Patient owners required.",
+        sex="F",
+        is_fixed=True,
+        ready_to_adopt=False,
+        shelter=shelter,
+        breed="Tabby",
+        image=img_info.get("url"),
+    )
+)
 
-response = requests.get('https://random.dog/woof.json')
+response = requests.get("https://random.dog/woof.json")
 img_info = dict(response.json())
 
-animal_list.append(m.Turtle.objects.create(
-    name="Jennifer",
-    color="yellow/green",
-    intake_type="S",
-    age=22,
-    description="A large, healthy Red-eared Slider who requires a large habitat to thrive.",
-    sex="F",
-    ready_to_adopt=False,
-    shelter=shelter,
-    species="Red-eared Slider",
-    image= img_info.get('url')
-))
+animal_list.append(
+    m.Turtle.objects.create(
+        name="Jennifer",
+        color="yellow/green",
+        intake_type="S",
+        age=22,
+        description="A large, healthy Red-eared Slider who requires a large habitat to thrive.",
+        sex="F",
+        ready_to_adopt=False,
+        shelter=shelter,
+        species="Red-eared Slider",
+        image=img_info.get("url"),
+    )
+)
 
-response = requests.get('https://random.dog/woof.json')
+response = requests.get("https://random.dog/woof.json")
 img_info = dict(response.json())
 
-animal_list.append(m.Dog.objects.create(
-    name="Larry",
-    color="Tricolor",
-    intake_type="S",
-    age=1,
-    description="Affectionate, Friendly, Playful, Gentle, Athletic, Curious.",
-    sex="M",
-    is_fixed=False,
-    ready_to_adopt=False,
-    shelter=shelter,
-    breed="Shepherd Mix",
-    image= img_info.get('url')
-))
+animal_list.append(
+    m.Dog.objects.create(
+        name="Larry",
+        color="Tricolor",
+        intake_type="S",
+        age=1,
+        description="Affectionate, Friendly, Playful, Gentle, Athletic, Curious.",
+        sex="M",
+        is_fixed=False,
+        ready_to_adopt=False,
+        shelter=shelter,
+        breed="Shepherd Mix",
+        image=img_info.get("url"),
+    )
+)
 
-response = requests.get('https://random.dog/woof.json')
+response = requests.get("https://random.dog/woof.json")
 img_info = dict(response.json())
 
-animal_list.append(m.Dog.objects.create(
-    name="Gadget",
-    color="White",
-    intake_type="S",
-    age=5,
-    description="Very cuddly.",
-    sex="M",
-    is_fixed=False,
-    ready_to_adopt=False,
-    shelter=shelter,
-    breed="Maltese",
-    image= img_info.get('url')
-))
+animal_list.append(
+    m.Dog.objects.create(
+        name="Gadget",
+        color="White",
+        intake_type="S",
+        age=5,
+        description="Very cuddly.",
+        sex="M",
+        is_fixed=False,
+        ready_to_adopt=False,
+        shelter=shelter,
+        breed="Maltese",
+        image=img_info.get("url"),
+    )
+)
 
-response = requests.get('https://random.dog/woof.json')
+response = requests.get("https://random.dog/woof.json")
 img_info = dict(response.json())
 
-animal_list.append(m.Dog.objects.create(
-    name="Mitra",
-    color="Brindle",
-    intake_type="S",
-    age=4,
-    description="Friendly, Affectionate, Loyal, Smart, Athletic.",
-    sex="F",
-    is_fixed=True,
-    ready_to_adopt=True,
-    shelter=shelter,
-    breed="Terrier Mix",
-    image= img_info.get('url')
-))
+animal_list.append(
+    m.Dog.objects.create(
+        name="Mitra",
+        color="Brindle",
+        intake_type="S",
+        age=4,
+        description="Friendly, Affectionate, Loyal, Smart, Athletic.",
+        sex="F",
+        is_fixed=True,
+        ready_to_adopt=True,
+        shelter=shelter,
+        breed="Terrier Mix",
+        image=img_info.get("url"),
+    )
+)
 
-response = requests.get('https://random.dog/woof.json')
+response = requests.get("https://random.dog/woof.json")
 img_info = dict(response.json())
 
-animal_list.append(m.Dog.objects.create(
-    name="Rosie",
-    color="Multi",
-    intake_type="S",
-    age=1,
-    description="Sweet puppy looking for a home.",
-    sex="F",
-    is_fixed=True,
-    ready_to_adopt=True,
-    shelter=shelter,
-    breed="Shepherd Mix",
-    image= img_info.get('url')
-))
+animal_list.append(
+    m.Dog.objects.create(
+        name="Rosie",
+        color="Multi",
+        intake_type="S",
+        age=1,
+        description="Sweet puppy looking for a home.",
+        sex="F",
+        is_fixed=True,
+        ready_to_adopt=True,
+        shelter=shelter,
+        breed="Shepherd Mix",
+        image=img_info.get("url"),
+    )
+)
 
-response = requests.get('https://random.dog/woof.json')
+response = requests.get("https://random.dog/woof.json")
 img_info = dict(response.json())
 
-animal_list.append(m.Dog.objects.create(
-    name="Hooch",
-    color="Multi",
-    intake_type="S",
-    age=2,
-    description="Very playfull.",
-    sex="M",
-    is_fixed=False,
-    ready_to_adopt=False,
-    shelter=shelter,
-    breed="Terrier Mix",
-    image= img_info.get('url')
-))
+animal_list.append(
+    m.Dog.objects.create(
+        name="Hooch",
+        color="Multi",
+        intake_type="S",
+        age=2,
+        description="Very playfull.",
+        sex="M",
+        is_fixed=False,
+        ready_to_adopt=False,
+        shelter=shelter,
+        breed="Terrier Mix",
+        image=img_info.get("url"),
+    )
+)
 
-response = requests.get('https://random.dog/woof.json')
+response = requests.get("https://random.dog/woof.json")
 img_info = dict(response.json())
 
-animal_list.append(m.Dog.objects.create(
-    name="Ella",
-    color="Cream",
-    intake_type="S",
-    age=6,
-    description="Has accidents at times in the house.",
-    sex="F",
-    is_fixed=True,
-    ready_to_adopt=True,
-    shelter=shelter,
-    breed="Maltese",
-    image= img_info.get('url')
-))
+animal_list.append(
+    m.Dog.objects.create(
+        name="Ella",
+        color="Cream",
+        intake_type="S",
+        age=6,
+        description="Has accidents at times in the house.",
+        sex="F",
+        is_fixed=True,
+        ready_to_adopt=True,
+        shelter=shelter,
+        breed="Maltese",
+        image=img_info.get("url"),
+    )
+)
 
 for animal in animal_list:
     animal.save()

@@ -125,8 +125,8 @@ class Volunteer(Person):
 class Animal(PolymorphicModel):
     """
     The Animal class is again a subclass of the PolyMorphicModel class. This allows us to use the
-    Animal class as a foreign key in the AnimalTask class without knowing if the Animal is a Dog,
-    Cat, or Turtle (polymorphism). It is referenced by the AnimalTask and AnimalComment classes.
+    Animal class as a foreign key in the Task class without knowing if the Animal is a Dog,
+    Cat, or Turtle (polymorphism). It is referenced by the Task and AnimalComment classes.
 
     NOTE: The .save() method has been overridden to automatically create tasks for the animal when
     it is first saved. This base implementation has an empty list of AUTOMATIC_TASKS, but subclasses
@@ -183,7 +183,7 @@ class Animal(PolymorphicModel):
         super().save(*args, **kwargs)
         if is_new:
             for task_outline in self.AUTOMATIC_TASKS:
-                automatic_task = AnimalTask.objects.create(
+                automatic_task = Task.objects.create(
                     title=task_outline["title"],
                     description=task_outline["description"],
                     shelter=self.shelter,
@@ -356,63 +356,17 @@ class Task(models.Model):
     assignee = models.ForeignKey(Worker, on_delete=models.CASCADE, null=True)
     # If a due_date is not specified, it defaults to seven days from the creation time
     due_date = models.DateTimeField(default=timezone.now() + datetime.timedelta(days=7))
-    completion_datetime = models.DateTimeField(null=True)
+    completion_datetime = models.DateTimeField(blank=True, null=True)
     creation_datetime = models.DateTimeField(auto_now_add=True)
     required_role = models.CharField(max_length=2, choices=REQUIRED_ROLE_CHOICES)
+    animal = models.ForeignKey(Animal, on_delete=models.CASCADE, null=True)
 
     @property
     def is_completed(self):
-        return self.completion_datetime is not None
+        return self.completion_datetime not in (None, "")
 
     def __str__(self):
         return self.title
-
-
-class AnimalTask(Task):
-    """
-    A subclass of the Task class representing a task associated with an animal. Can be further
-    subclassed to represent specific tasks (see below).
-
-    Additional Attributes:
-    animal: A foreign key to the Animal class representing the animal associated with the task.
-    """
-
-    animal = models.ForeignKey(Animal, on_delete=models.CASCADE)
-
-
-class MicrochippingTask(AnimalTask):
-    """
-    A subclass of the AnimalTask class representing a task to microchip an animal.
-
-    Additional Attributes:
-    chip_ID: A string representing the microchip number of the animal.
-    """
-
-    chip_ID = models.CharField(max_length=100)
-
-
-class VaccinationTask(AnimalTask):
-    """
-    A subclass of the AnimalTask class representing a task to vaccinate an animal.
-
-    Additional Attributes:
-    vaccine: A string representing the vaccine to be administered to the animal.
-    """
-
-    vaccine_type = models.CharField(max_length=100)
-    protocol = models.TextField()
-
-
-class HealthCheckTask(AnimalTask):
-    """
-    A subclass of the AnimalTask class representing a task to perform a health check on an animal.
-
-    Additional Attributes:
-    health_check_notes: A string representing the notes from the health check.
-    """
-
-    health_check_notes = models.TextField()
-    results = models.TextField()
 
 
 class Comment(models.Model):

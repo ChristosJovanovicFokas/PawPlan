@@ -12,7 +12,6 @@ model_list = [
     m.Cat,
     m.Turtle,
     m.Task,
-    m.AnimalTask,
     m.AnimalComment,
     m.TaskComment,
 ]

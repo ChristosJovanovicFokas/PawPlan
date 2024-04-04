@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% block content %}
 <table width="100%" cellpadding="0" cellspacing="0" border="0">
     <tr>
         <td align="left" valign="middle">
@@ -22,4 +23,4 @@
 <body>
     <img id="slider" src="{% static 'images/dogs/Dog1.png' %}" alt="Slider Image">
 </body>
-</html>
+{% endblock %}
