@@ -165,7 +165,7 @@ class Animal(PolymorphicModel):
     name = models.CharField(max_length=100)
     color = models.CharField(max_length=30)
     intake_type = models.CharField(max_length=1, choices=INTAKE_CHOICES, blank=True)
-    intake_date = models.DateTimeField(default=timezone.now())
+    intake_date = models.DateTimeField(default=timezone.now)
     image = models.CharField(max_length=300)
     age = models.IntegerField(null=True)
     description = models.TextField()
@@ -431,7 +431,7 @@ class Comment(models.Model):
 
     # Fields
     text = models.TextField()
-    time_stamp = models.DateTimeField(default=timezone.now())
+    time_stamp = models.DateTimeField(default=timezone.now)
 
 
 class TaskComment(Comment):
