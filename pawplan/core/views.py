@@ -133,6 +133,8 @@ def adoption(request, pet_id):
 def about_view(request):
     return render(request, "about.html")
 
+def adapt(request):
+    return render(request, "adopt.html")
 
 def login(request):
 
