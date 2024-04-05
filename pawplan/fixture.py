@@ -138,10 +138,17 @@ for person in [dr_baliga, steve_p, steve_b, ricky_k, derek_p, connor_h, christos
 
 # Create new animal objects (which will also automatically create Task objects for each)
 
+def get_jpg():
+    run = True
+    while run:
+        response = requests.get("https://random.dog/woof.json")
+        img_info = dict(response.json())
+        if img_info.get('url').split('.')[2] == 'jpg':
+            return img_info
+    
 animal_list = []
 
-response = requests.get("https://random.dog/woof.json")
-img_info = dict(response.json())
+img_info = get_jpg()
 
 animal_list.append(
     m.Dog.objects.create(
@@ -159,8 +166,7 @@ animal_list.append(
     )
 )
 
-response = requests.get("https://random.dog/woof.json")
-img_info = dict(response.json())
+img_info = get_jpg()
 
 animal_list.append(
     m.Cat.objects.create(
@@ -178,8 +184,7 @@ animal_list.append(
     )
 )
 
-response = requests.get("https://random.dog/woof.json")
-img_info = dict(response.json())
+img_info = get_jpg()
 
 animal_list.append(
     m.Cat.objects.create(
@@ -197,8 +202,7 @@ animal_list.append(
     )
 )
 
-response = requests.get("https://random.dog/woof.json")
-img_info = dict(response.json())
+img_info = get_jpg()
 
 animal_list.append(
     m.Turtle.objects.create(
@@ -215,8 +219,7 @@ animal_list.append(
     )
 )
 
-response = requests.get("https://random.dog/woof.json")
-img_info = dict(response.json())
+img_info = get_jpg()
 
 animal_list.append(
     m.Dog.objects.create(
@@ -234,8 +237,7 @@ animal_list.append(
     )
 )
 
-response = requests.get("https://random.dog/woof.json")
-img_info = dict(response.json())
+img_info = get_jpg()
 
 animal_list.append(
     m.Dog.objects.create(
@@ -253,8 +255,7 @@ animal_list.append(
     )
 )
 
-response = requests.get("https://random.dog/woof.json")
-img_info = dict(response.json())
+img_info = get_jpg()
 
 animal_list.append(
     m.Dog.objects.create(
@@ -272,8 +273,7 @@ animal_list.append(
     )
 )
 
-response = requests.get("https://random.dog/woof.json")
-img_info = dict(response.json())
+img_info = get_jpg()
 
 animal_list.append(
     m.Dog.objects.create(
@@ -291,8 +291,7 @@ animal_list.append(
     )
 )
 
-response = requests.get("https://random.dog/woof.json")
-img_info = dict(response.json())
+img_info = get_jpg()
 
 animal_list.append(
     m.Dog.objects.create(
@@ -310,8 +309,7 @@ animal_list.append(
     )
 )
 
-response = requests.get("https://random.dog/woof.json")
-img_info = dict(response.json())
+img_info = get_jpg()
 
 animal_list.append(
     m.Dog.objects.create(

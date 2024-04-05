@@ -82,7 +82,11 @@ def worker_dash(request):
 
 def home(request):
 
-    return render(request, "home.html", {})
+    animals = Animal.objects.order_by('?')[:3]
+
+    return render(request, "home.html", {
+        'animals' : animals
+        })
 
 
 def adoption(request, pet_id):
