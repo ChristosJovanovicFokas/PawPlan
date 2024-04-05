@@ -1,26 +1,46 @@
-{% extends 'base.html' %}
+<!DOCTYPE html>
 {% load static %}
-{% block content %}
-<table width="100%" cellpadding="0" cellspacing="0" border="0">
-    <tr>
-        <td align="left" valign="middle">
-            <img src="{% static 'images/Logo.png' %}" alt="Logo" width="100" height="auto" style="display: block; padding: 10px;">
-        </td>
-        <td align="center" valign="middle">
-            <a href="{% url 'home'%}"> Home </a>
-            <a href="{% url 'animals'%}"> Adopt </a>
-            <a href="{% url 'about'%}"> About Us </a>
-        </td>
-        <td align="right">
-            <a href="{% url 'login' %}">Login</a>
-        </td>
-        <td align="right" valign="middle">
-            <img src="{% static 'images/Login.png' %}" alt="Login logo" width="80" height="auto" style="display: block; padding: 10px;">
-        </td>
-    </tr>
-</table>
-<script src="{% static 'js/slider.js' %}"></script>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+{% include 'navbar.html' %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static '/css/about.css' %}">
+</head>
 <body>
-    <img id="slider" src="{% static 'images/dogs/Dog1.png' %}" alt="Slider Image">
+<div class="container">
+    <div class="content">
+        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+            <ol class="carousel-indicators">
+                <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+            </ol>
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img class="d-block w-100" src="{% static '/images/dog1.jpg' %}" alt="First slide">
+                </div>
+                <div class="carousel-item">
+                    <img class="d-block w-100" src="{% static '/images/dog2.jpg' %}" alt="Second slide">
+                </div>
+                <div class="carousel-item">
+                    <img class="d-block w-100" src="{% static '/images/dog3.jpg' %}" alt="Third slide">
+                </div>
+            </div>
+            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+    </div>
 </body>
-{% endblock %}
+</html>
