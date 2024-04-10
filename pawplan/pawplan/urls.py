@@ -37,6 +37,7 @@ urlpatterns = [
     path("filter_tasks/", views.filter_tasks, name="filter_tasks"),
     path("sort_tasks/", views.sort_tasks, name="sort_tasks"),
     path("login/", views.login, name="login"),
+    path("task/add/", views.add_task, name="add_task"),
     path("task/edit/<int:task_id>/", views.edit_task, name="edit_task"),
     path("task/delete/<int:task_id>/", views.delete_task, name="delete_task"),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

@@ -2,7 +2,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_POST
 from .models import Animal, Task, Worker, Shelter, Person, Address, Adopter
-from .forms import TaskForm, AdoptionForm
+from .forms import TaskForm, AdoptionForm, AddTaskForm
 from django.core.paginator import Paginator
 
 # Create your views here.
@@ -228,6 +228,17 @@ def edit_task(request, task_id):
     else:
         form = TaskForm(instance=task)
     return render(request, "edit_task.html", {"form": form})
+
+
+def add_task(request):
+    if request.method == "POST":
+        form = AddTaskForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("worker_dash")  # Redirect to the tasks list
+    else:
+        form = AddTaskForm()
+    return render(request, "add_task.html", {"form": form})
 
 
 @require_POST
