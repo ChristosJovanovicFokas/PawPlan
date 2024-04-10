@@ -2,10 +2,24 @@ from django import forms
 from .models import Task
 
 
-class AddTaskForm(forms.Form):
-    title = forms.CharField(max_length=100)
-    description = forms.CharField(widget=forms.Textarea)
-
+class AddTaskForm(forms.ModelForm):
+    class Meta:
+        model = Task
+        fields = [
+            "title",
+            "description",
+            "shelter",
+            "assignee",
+            "due_date",
+            "animal",
+            "required_role",
+        ]
+        widgets = {
+            "title": forms.TextInput(attrs={"class": "form-control"}),
+            "description": forms.Textarea(attrs={"rows": 3}),
+            "completion_datetime": forms.DateInput(attrs={"type": "date"}),
+        }
+    
 
 class TaskForm(forms.ModelForm):
     class Meta:

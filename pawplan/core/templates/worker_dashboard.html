@@ -45,6 +45,8 @@
         <button type="submit">Apply Sort</button>
     </form>
 
+    <a href=" {% url 'add_task' %}"> Add Task </a>
+
     <div id="task-list">
         <!-- include task_list.html dynamically -->
         {% include 'task_list.html' %}
