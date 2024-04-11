@@ -92,6 +92,7 @@ class Worker(Person):
     ROLE_CHOICES = {MANAGER: "Manager", REGULAR: "Regular", VET: "Veterenarian"}
 
     username = models.CharField(max_length=100)
+    password = models.CharField(max_length=50)
     role = models.CharField(max_length=2, choices=ROLE_CHOICES)
     hire_date = models.DateField()
     shelter = models.ForeignKey(Shelter, on_delete=models.CASCADE)

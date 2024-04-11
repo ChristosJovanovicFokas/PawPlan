@@ -35,3 +35,7 @@ class AdoptionForm(forms.Form):
     state = forms.CharField(label="State", max_length=300, required=True)
     postal = forms.CharField(label="Postal", max_length=50, required=True)
     country = forms.CharField(label="Country", max_length=300, required=True)
+
+class LoginForm(forms.Form):
+    email = forms.CharField(label="Email", max_length=200, required=True)
+    password = forms.CharField(label="Password", widget=forms.PasswordInput(), required=True)
