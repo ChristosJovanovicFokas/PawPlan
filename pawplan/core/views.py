@@ -66,7 +66,7 @@ def animals(request):
             if param == "sex":
                 query.update({"sex__in": params.get(param)})
 
-        p = Paginator(Animal.objects.filter(**query), 2)
+        p = Paginator(Animal.objects.filter(**query), 5)
         page = request.GET.get("page")
         animal = p.get_page(page)
 

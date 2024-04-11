@@ -3,6 +3,7 @@
         {% for animal in animals %}
         <li>
             <a href="animal/{{ animal.id }}">
+                <img style="max-width:30%;" src="{{ animal.image }}"/>
                 <div>{{animal.name}}</div>
             </a>
         </li>
