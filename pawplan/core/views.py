@@ -1,6 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_POST
+from django.urls import reverse
 from .models import (
     Animal,
     Task,
@@ -13,7 +14,7 @@ from .models import (
     TaskComment,
     Volunteer,
 )
-from .forms import TaskForm, AdoptionForm, AddTaskForm, CommentForm
+from .forms import TaskForm, AdoptionForm, AddTaskForm, CommentForm, AnimalForm
 from django.core.paginator import Paginator
 import datetime
 
@@ -90,6 +91,58 @@ def worker_dash(request):
             "workers": workers,
         },
     )
+
+
+def add_animal(request):
+    if request.method == "POST":
+        form = AnimalForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect(reverse("animal_dashboard"))
+    else:
+        form = AnimalForm()
+
+    return render(request, "add_animal.html", {"form": form})
+
+
+def edit_animal(request, animal_id):
+    animal = get_object_or_404(Animal, id=animal_id)
+    if request.method == "POST":
+        form = AnimalForm(request.POST, instance=animal)
+        if form.is_valid():
+            form.save()
+            return redirect("animal_dashboard")
+    else:
+        form = AnimalForm(instance=animal)
+
+    return render(request, "edit_animal.html", {"form": form, "animal": animal})
+
+
+@require_POST
+def delete_animal(request, animal_id):
+    animal = get_object_or_404(Animal, id=animal_id)
+    animal.delete()
+    return redirect("worker_dash")
+
+
+def sort_animals(request):
+    sort_by = request.POST.get("sort", "name")  # Default sort by name
+    animals = Animal.objects.all().order_by(sort_by)
+    return render(request, "dash_animal_list.html", {"animals": animals})
+
+
+def filter_animals(request):
+    sex = request.POST.get("sex")
+    ready_to_adopt = request.POST.get("ready_to_adopt")
+
+    animals = Animal.objects.all()
+
+    if sex:
+        animals = animals.filter(sex=sex)
+    if ready_to_adopt:
+        animals = animals.filter(ready_to_adopt=ready_to_adopt == "true")
+
+    return render(request, "dash_animal_list.html", {"animals": animals})
 
 
 def home(request):

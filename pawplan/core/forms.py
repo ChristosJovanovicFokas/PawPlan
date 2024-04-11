@@ -1,5 +1,5 @@
 from django import forms
-from .models import Task, AnimalComment, TaskComment
+from .models import Task, AnimalComment, TaskComment, Animal
 
 
 class AddTaskForm(forms.ModelForm):
@@ -20,7 +20,7 @@ class AddTaskForm(forms.ModelForm):
             "completion_datetime": forms.DateInput(attrs={"type": "date"}),
             "due_date": forms.DateInput(attrs={"type": "date"}),
         }
-    
+
 
 class TaskForm(forms.ModelForm):
     class Meta:
@@ -39,43 +39,50 @@ class TaskForm(forms.ModelForm):
             "completion_datetime": forms.DateInput(attrs={"type": "date"}),
         }
 
+
+class AnimalForm(forms.ModelForm):
+    class Meta:
+        model = Animal
+        fields = [
+            "name",
+            "color",
+            "intake_type",
+            "intake_date",
+            "image",
+            "age",
+            "description",
+            "sex",
+            "ready_to_adopt",
+            "shelter",
+        ]
+        widgets = {}
+
+
 class CommentForm(forms.ModelForm):
     class Meta:
-        fields = [
-            "author",
-            "comment"
-            "date"
-        ]
+        fields = ["author", "comment" "date"]
         widgets = {
-            "comment":forms.Textarea(attrs={'rows': 4, 'cols': 50}),
-            "date":forms.DateInput(attrs={"type": "date"})
+            "comment": forms.Textarea(attrs={"rows": 4, "cols": 50}),
+            "date": forms.DateInput(attrs={"type": "date"}),
         }
+
 
 class AnimalCommentForm(forms.ModelForm):
     class Meta:
-        fields = [
-            "author",
-            "comment"
-            "date"
-        ]
+        fields = ["author", "comment" "date"]
         widgets = {
-            "comment":forms.Textarea(attrs={'rows': 4, 'cols': 50}),
-            "date":forms.DateInput(attrs={"type": "date"})
+            "comment": forms.Textarea(attrs={"rows": 4, "cols": 50}),
+            "date": forms.DateInput(attrs={"type": "date"}),
         }
 
 
 class TaskCommentForm(forms.ModelForm):
     class Meta:
-        fields = [
-            "author",
-            "comment",
-            "date"
-        ]
+        fields = ["author", "comment", "date"]
         widgets = {
-            "comment":forms.Textarea(attrs={'rows': 4, 'cols': 50}),
-            "date":forms.DateInput(attrs={"type": "date"})
+            "comment": forms.Textarea(attrs={"rows": 4, "cols": 50}),
+            "date": forms.DateInput(attrs={"type": "date"}),
         }
-
 
 
 class AdoptionForm(forms.Form):
@@ -88,5 +95,3 @@ class AdoptionForm(forms.Form):
     state = forms.CharField(label="State", max_length=300, required=True)
     postal = forms.CharField(label="Postal", max_length=50, required=True)
     country = forms.CharField(label="Country", max_length=300, required=True)
-
-
