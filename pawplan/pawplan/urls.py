@@ -32,6 +32,7 @@ urlpatterns = [
     path("dashboard/", views.worker_dash, name="worker_dash"),
     path("", views.home, name="home"),
     path("about/", views.about_view, name="about"),
+    path('add_comment/', views.add_comment, name='add_comment'),
     path("adopt/", views.adapt, name="adopt"),
     path("animal/adoption/<int:pet_id>", views.adoption, name="adoption"),
     path("filter_tasks/", views.filter_tasks, name="filter_tasks"),
