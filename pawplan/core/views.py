@@ -14,7 +14,8 @@ from .models import (
     TaskComment,
     Volunteer,
 )
-from .forms import TaskForm, AdoptionForm, AddTaskForm, CommentForm, AnimalForm
+from .forms import TaskForm, AdoptionForm, AddTaskForm, CommentForm, AnimalForm, LoginForm
+
 from django.core.paginator import Paginator
 import datetime
 
@@ -78,7 +79,15 @@ def animal(request, pet_id):
 
 
 def worker_dash(request):
+
+    if 'is_valid' not in request.session:
+        request.session['is_valid'] = False
+
+    if request.session.get('is_valid') == False:
+        return redirect(login)
+
     tasks = Task.objects.all().prefetch_related("taskcomment_set")
+
     animals = Animal.objects.all()
     workers = Worker.objects.all()
 
@@ -226,7 +235,28 @@ def adapt(request):
 
 def login(request):
 
-    return render(request, "login.html", {})
+    loginForm = LoginForm()
+
+    form = LoginForm(request.GET)
+    if form.is_valid():
+        email = form.cleaned_data["email"]
+        password = form.cleaned_data["password"]
+
+        worker = Worker.objects.filter(email = email, password = password)
+        print(worker)
+
+        if worker:
+            request.session['is_valid'] = True
+            return redirect(worker_dash)
+        else:
+            return render(request, "login.html", {
+            'loginForm' : loginForm,
+            'invalid' : True
+        })
+        
+    return render(request, "login.html", {
+        'loginForm' : loginForm
+    })
 
 
 def filter_tasks(request):
