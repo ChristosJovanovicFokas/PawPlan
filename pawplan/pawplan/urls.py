@@ -31,7 +31,6 @@ urlpatterns = [
     path("dashboard/", views.worker_dash, name="worker_dash"),
     path("", views.home, name="home"),
     path("about/", views.about_view, name="about"),
-    path("add_comment/", views.add_comment, name="add_comment"),
     path("adopt/", views.adapt, name="adopt"),
     path("animal/adoption/<int:pet_id>", views.adoption, name="adoption"),
     path("filter_tasks/", views.filter_tasks, name="filter_tasks"),
@@ -46,4 +45,14 @@ urlpatterns = [
     path("task/edit/<int:task_id>/", views.edit_task, name="edit_task"),
     path("task/delete/<int:task_id>/", views.delete_task, name="delete_task"),
     path("volunteer/", views.volunteer_form, name="volunteer_form"),
+    path(
+        "add_task_comment/<int:task_id>/",
+        views.add_task_comment,
+        name="add_task_comment",
+    ),
+    path(
+        "add_animal_comment/<int:task_id>/",
+        views.add_animal_comment,
+        name="add_animal_comment",
+    ),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

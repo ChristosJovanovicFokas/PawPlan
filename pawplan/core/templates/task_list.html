@@ -41,6 +41,16 @@
                                 <p>No comments found.</p>
                             {% endfor %}
                         </div>
+                        <form method="post" action="{% url 'add_task_comment' task.id %}">
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                <label for="commentText{{ task.id }}" class="form-label">Add Comment</label>
+                                <textarea class="form-control" id="commentText{{ task.id }}" name="text" rows="2" required></textarea>
+                            </div>
+                            <input type="hidden" name="person" value="{{ request.user.username }}">
+                            <input type="hidden" name="task_id" value="{{ task.id }}">
+                            <button type="submit" class="btn btn-primary">Post Comment</button>
+                        </form>
                     </div>
                     <div class="modal-footer">
                         <a href="{% url 'edit_task' task.id %}" class="btn btn-secondary">Edit</a>

@@ -304,21 +304,24 @@ def add_task(request):
     return render(request, "add_task.html", {"form": form})
 
 
-def add_comment(request):
-    if request.method == "POST":
-        comment_text = request.POST.get("comment")
+@require_POST
+def add_task_comment(request, task_id):
+    task = get_object_or_404(Task, pk=task_id)
+    person = request.POST.get("person")
+    text = request.POST.get("text")
+    comment = TaskComment(task=task, person=person, text=text)
+    comment.save()
+    return redirect("woker_dash")
 
-        animal_id = request.POST.get("animal_id")
-        animal_comment = AnimalComment(animal_id=animal_id, comment=comment_text)
-        animal_comment.save()
 
-        task_id = request.POST.get("task_id")
-        task_comment = TaskComment(task_id=task_id, comment=comment_text)
-        task_comment.save()
-        return redirect("success_page")
-    else:
-        form = CommentForm()
-    return render(request, "comment.html", {"form": form})
+@require_POST
+def add_animal_comment(request, task_id):
+    animal = get_object_or_404(Animal, pk=task_id)
+    person = request.POST.get("person")
+    text = request.POST.get("text")
+    comment = TaskComment(animal=animal, person=person, text=text)
+    comment.save()
+    return redirect("worker_dash")
 
 
 def volunteer_form(request):
