@@ -385,7 +385,7 @@ class Comment(models.Model):
 
     # Fields
     text = models.TextField()
-    timeStamp = models.TimeField()
+    timeStamp = models.TimeField(default=timezone.now)
 
 
 class TaskComment(Comment):
