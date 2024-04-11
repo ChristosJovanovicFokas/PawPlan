@@ -39,7 +39,7 @@ class TaskForm(forms.ModelForm):
             "completion_datetime": forms.DateInput(attrs={"type": "date"}),
         }
 
-class CommentForm(forms.ModelForms):
+class CommentForm(forms.ModelForm):
     class Meta:
         fields = [
             "author",
