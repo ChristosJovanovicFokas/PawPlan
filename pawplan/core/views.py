@@ -1,9 +1,10 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_POST
-from .models import Animal, Task, Worker, Shelter, Person, Address, Adopter, AnimalComment, TaskComment
+from .models import Animal, Task, Worker, Shelter, Person, Address, Adopter, AnimalComment, TaskComment, Volunteer
 from .forms import TaskForm, AdoptionForm, AddTaskForm, CommentForm
 from django.core.paginator import Paginator
+import datetime
 
 # Create your views here.
 
@@ -257,9 +258,51 @@ def add_comment(request):
         form = CommentForm()
     return render(request, 'comment.html', {'form': form})
 
+def volunteer_form(request):
+    shelters = Shelter.objects.all()  
+    if request.method == 'POST':
+        form = AdoptionForm(request.POST)
+        if form.is_valid():
+            name = form.cleaned_data['name']
+            phone_number = form.cleaned_data['phone_number']
+            email = form.cleaned_data['email']
+            address_one = form.cleaned_data['address_one']
+            address_two = form.cleaned_data.get('address_two', '')
+            city = form.cleaned_data['city']
+            state = form.cleaned_data['state']
+            postal = form.cleaned_data['postal']
+            country = form.cleaned_data['country']
+            shelter_id = request.POST.get('shelter')  
+
+            address = Address.objects.create(
+                street1=address_one,
+                street2=address_two,
+                city=city,
+                state=state,
+                postal=postal,
+                country=country
+            )
+
+            shelter = Shelter.objects.get(pk=shelter_id)
+            volunteer = Volunteer.objects.create(
+                name=name,
+                phone_number=phone_number,
+                email=email,
+                address=address,
+                start_date=datetime.date.today(),  
+                shelter=shelter
+            )
+
+            return redirect('home')
+    else:
+        form = AdoptionForm()
+    
+    return render(request, 'volunteer_form.html', {'form': form, 'shelters': shelters})
+
 
 @require_POST
 def delete_task(request, task_id):
     task = get_object_or_404(Task, id=task_id)
     task.delete()
     return redirect("worker_dash")  # Redirect to the tasks list
+
