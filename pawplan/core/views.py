@@ -1,8 +1,8 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_POST
-from .models import Animal, Task, Worker, Shelter, Person, Address, Adopter
-from .forms import TaskForm, AdoptionForm, AddTaskForm
+from .models import Animal, Task, Worker, Shelter, Person, Address, Adopter, AnimalComment, TaskComment
+from .forms import TaskForm, AdoptionForm, AddTaskForm, CommentForm
 from django.core.paginator import Paginator
 
 # Create your views here.
@@ -239,6 +239,23 @@ def add_task(request):
     else:
         form = AddTaskForm()
     return render(request, "add_task.html", {"form": form})
+
+
+def add_comment(request):
+    if request.method == 'POST':
+        comment_text = request.POST.get('comment')
+
+        animal_id = request.POST.get('animal_id')  
+        animal_comment = AnimalComment(animal_id=animal_id, comment=comment_text)
+        animal_comment.save()
+
+        task_id = request.POST.get('task_id')  
+        task_comment = TaskComment(task_id=task_id, comment=comment_text)
+        task_comment.save()
+        return redirect('success_page') 
+    else:
+        form = CommentForm()
+    return render(request, 'comment.html', {'form': form})
 
 
 @require_POST
