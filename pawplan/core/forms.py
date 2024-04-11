@@ -1,5 +1,5 @@
 from django import forms
-from .models import Task
+from .models import Task, AnimalComment, TaskComment
 
 
 class AddTaskForm(forms.ModelForm):
@@ -39,6 +39,44 @@ class TaskForm(forms.ModelForm):
             "completion_datetime": forms.DateInput(attrs={"type": "date"}),
         }
 
+class CommentForm(forms.ModelForms):
+    class Meta:
+        fields = [
+            "author",
+            "comment"
+            "date"
+        ]
+        widgets = {
+            "comment":forms.Textarea(attrs={'rows': 4, 'cols': 50}),
+            "date":forms.DateInput(attrs={"type": "date"})
+        }
+
+class AnimalCommentForm(forms.ModelForm):
+    class Meta:
+        fields = [
+            "author",
+            "comment"
+            "date"
+        ]
+        widgets = {
+            "comment":forms.Textarea(attrs={'rows': 4, 'cols': 50}),
+            "date":forms.DateInput(attrs={"type": "date"})
+        }
+
+
+class TaskCommentForm(forms.ModelForm):
+    class Meta:
+        fields = [
+            "author",
+            "comment",
+            "date"
+        ]
+        widgets = {
+            "comment":forms.Textarea(attrs={'rows': 4, 'cols': 50}),
+            "date":forms.DateInput(attrs={"type": "date"})
+        }
+
+
 
 class AdoptionForm(forms.Form):
     name = forms.CharField(label="Full Name", max_length=400, required=True)
@@ -50,3 +88,5 @@ class AdoptionForm(forms.Form):
     state = forms.CharField(label="State", max_length=300, required=True)
     postal = forms.CharField(label="Postal", max_length=50, required=True)
     country = forms.CharField(label="Country", max_length=300, required=True)
+
+
