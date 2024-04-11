@@ -1,26 +1,32 @@
 {% include 'navbar.html' %}
+{% load static %}
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static '/css/volunteer.css' %}">
     <title>Volunteer Form</title>
 </head>
 <body>
-    <h1>Volunteer Form</h1>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
+    <div class="container">
+        <div class="form-box">
+            <h1>Volunteer Form</h1>
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
 
-        <label for="shelter">Select Shelter:</label>
-        <select id="shelter" name="shelter">
-            {% for shelter in shelters %}
-            <option value="{{ shelter.id }}">{{ shelter.name }}</option>
-            {% endfor %}
-        </select>
+                <label for="shelter">Select Shelter:</label>
+                <select id="shelter" name="shelter">
+                    {% for shelter in shelters %}
+                    <option value="{{ shelter.id }}">{{ shelter.name }}</option>
+                    {% endfor %}
+                </select>
 
-        <button type="submit">Submit</button>
-    </form>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div>
 </body>
 </html>
