@@ -381,11 +381,12 @@ class Comment(models.Model):
     """
 
     # Foreign keys
-    person = models.ForeignKey(Person, on_delete=models.CASCADE)
+    task = models.ForeignKey(Task, null = True, on_delete=models.CASCADE)
+    person = models.ForeignKey(Person, null = True, on_delete=models.CASCADE)
 
     # Fields
     text = models.TextField()
-    time_stamp = models.DateTimeField(default=timezone.now)
+    timeStamp = models.TimeField()
 
 
 class TaskComment(Comment):
