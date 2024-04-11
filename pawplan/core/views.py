@@ -79,7 +79,7 @@ def animal(request, pet_id):
 
 def worker_dash(request):
     tasks = Task.objects.all().prefetch_related("taskcomment_set")
-    animals = Animal.objects.all()
+    animals = Animal.objects.all().prefetch_related("animalcomment_set")
     workers = Worker.objects.all()
 
     return render(

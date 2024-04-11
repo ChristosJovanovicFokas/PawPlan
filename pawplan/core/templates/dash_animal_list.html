@@ -28,10 +28,23 @@
                         <p>Age: {{ animal.age }}</p>
                         <p>Ready to Adopt: {{ animal.ready_to_adopt }}</p>
                         <p>Shelter: {{ animal.shelter }}</p>
+                        <!-- Display comments -->
+                        <div class="animal-comments">
+                            <h6>Comments:</h6>
+                            {% for comment in animal.animalcomment_set.all %}
+                                <div class="comment mb-2">
+                                    <strong>{{ comment.person }}</strong> <em>{{ comment.timeStamp }}</em>
+                                    <p>{{ comment.text }}</p>
+                                </div>
+                            {% empty %}
+                                <p>No comments found.</p>
+                            {% endfor %}
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+
     {% empty %}
         <p>No animals found.</p>
     {% endfor %}
