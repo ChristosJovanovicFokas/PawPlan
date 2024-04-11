@@ -4,50 +4,123 @@
 
 <script src="https://unpkg.com/htmx.org@latest"></script>
 
-<div>
-    <form hx-post="{% url 'filter_tasks' %}" hx-target="#task-list">
-        {% csrf_token %}
 
-        <label for="completion-status">Completion Status:</label>
-        <select id="completion-status" name="completion_status">
-            <option value="">All</option>
-            <option value="completed">Completed</option>
-            <option value="incomplete">Incomplete</option>
-        </select>
+<div class="container mt-3">
+    <h1>Dashboard</h1>
 
-        <label for="assignee">Assignee:</label>
-        <select id="assignee" name="assignee">
-            <option value="">All</option>
-            {% for worker in workers %}
-            <option value="{{ worker.id }}">{{ worker.name }}</option>
-            {% endfor %}
-        </select>
+    <div class="row">
+        <div class="col-md-6">
+            <h2>Tasks</h2>
+            <div class="row mb-3">
+                <div class="col-md-4">
+                    <form hx-post="{% url 'filter_tasks' %}" hx-target="#task-list" class="mb-3">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="completion-status" class="form-label">Completion Status:</label>
+                            <select id="completion-status" name="completion_status" class="form-select">
+                                <option value="">All</option>
+                                <option value="completed">Completed</option>
+                                <option value="incomplete">Incomplete</option>
+                            </select>
+                        </div>
 
-        <label for="animal">Animal:</label>
-        <select id="animal" name="animal">
-            <option value="">All</option>
-            {% for animal in animals %}
-            <option value="{{ animal.id }}">{{ animal.name }}</option>
-            {% endfor %}
-        </select>
+                        <div class="mb-3">
+                            <label for="assignee" class="form-label">Assignee:</label>
+                            <select id="assignee" name="assignee" class="form-select">
+                                <option value="">All</option>
+                                {% for worker in workers %}
+                                <option value="{{ worker.id }}">{{ worker.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
 
-        <button type="submit">Apply Filter</button>
-    </form>
+                        <div class="mb-3">
+                            <label for="animal" class="form-label">Animal:</label>
+                            <select id="animal" name="animal" class="form-select">
+                                <option value="">All</option>
+                                {% for animal in animals %}
+                                <option value="{{ animal.id }}">{{ animal.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
 
-    <form hx-post="{% url 'sort_tasks' %}" hx-target="#task-list">
-        {% csrf_token %} 
-        <label for="sort">Sort:</label>
-        <select id="sort" name="sort">
-            <option value="title">Title</option>
-            <option value="due_date">Due Date</option>
-            <option value="creation_datetime">Creation Date</option>
-        </select>
-        <button type="submit">Apply Sort</button>
-    </form>
+                        <button type="submit" class="btn btn-primary">Apply Filter</button>
+                    </form>
+                </div>
+                <div class="col-md-4">
+                    <form hx-post="{% url 'sort_tasks' %}" hx-target="#task-list">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="sort" class="form-label">Sort:</label>
+                            <select id="sort" name="sort" class="form-select">
+                                <option value="title">Title</option>
+                                <option value="due_date">Due Date</option>
+                                <option value="creation_datetime">Creation Date</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-secondary">Apply Sort</button>
+                    </form>
+                </div>
+                <div class="col-md-4 d-flex align-items-end">
+                    <a href="{% url 'add_task' %}" class="btn btn-success">Add Task</a>
+                </div>
+            </div>
 
-    <div id="task-list">
-        <!-- include task_list.html dynamically -->
-        {% include 'task_list.html' %}
+            <div id="task-list">
+                <!-- include task_list.html dynamically -->
+                {% include 'task_list.html' %}
+            </div>
+        </div>
+    
+        <div class="col-md-6">
+            <h2>Animals</h2>
+            <div class="row mb-3">
+                <div class="col-12">
+                    <form hx-post="{% url 'filter_animals' %}" hx-target="#animal-list" class="mb-3">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="animal-sex" class="form-label">Sex:</label>
+                            <select id="animal-sex" name="sex" class="form-select">
+                                <option value="">All</option>
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="animal-ready-to-adopt" class="form-label">Ready to Adopt:</label>
+                            <select id="animal-ready-to-adopt" name="ready_to_adopt" class="form-select">
+                                <option value="">All</option>
+                                <option value="true">Yes</option>
+                                <option value="false">No</option>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Apply Filter</button>
+                    </form>
+                </div>
+                <div class="col-12">
+                    <form hx-post="{% url 'sort_animals' %}" hx-target="#animal-list">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="animal-sort" class="form-label">Sort By:</label>
+                            <select id="animal-sort" name="sort" class="form-select">
+                                <option value="name">Name</option>
+                                <option value="age">Age</option>
+                                <option value="intake_date">Intake Date</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-secondary">Apply Sort</button>
+                    </form>
+                </div>
+            </div>
+            <a href="{% url 'add_animal' %}" class="btn btn-success mb-3">Add Animal</a>
+            <div id="animal-list">
+                {% include 'dash_animal_list.html' %}
+            </div>
+        </div>
     </div>
 </div>
+</div>
+
 {% endblock %}

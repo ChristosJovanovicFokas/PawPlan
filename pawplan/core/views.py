@@ -1,9 +1,23 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_POST
-from .models import Animal, Task, Worker, Shelter, Person, Address, Adopter
-from .forms import TaskForm, AdoptionForm, LoginForm
+from django.urls import reverse
+from .models import (
+    Animal,
+    Task,
+    Worker,
+    Shelter,
+    Person,
+    Address,
+    Adopter,
+    AnimalComment,
+    TaskComment,
+    Volunteer,
+)
+from .forms import TaskForm, AdoptionForm, AddTaskForm, CommentForm, AnimalForm, LoginForm
+
 from django.core.paginator import Paginator
+import datetime
 
 # Create your views here.
 
@@ -72,7 +86,8 @@ def worker_dash(request):
     if request.session.get('is_valid') == False:
         return redirect(login)
 
-    tasks = Task.objects.all()
+    tasks = Task.objects.all().prefetch_related("taskcomment_set")
+
     animals = Animal.objects.all()
     workers = Worker.objects.all()
 
@@ -87,13 +102,63 @@ def worker_dash(request):
     )
 
 
+def add_animal(request):
+    if request.method == "POST":
+        form = AnimalForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect(reverse("animal_dashboard"))
+    else:
+        form = AnimalForm()
+
+    return render(request, "add_animal.html", {"form": form})
+
+
+def edit_animal(request, animal_id):
+    animal = get_object_or_404(Animal, id=animal_id)
+    if request.method == "POST":
+        form = AnimalForm(request.POST, instance=animal)
+        if form.is_valid():
+            form.save()
+            return redirect("animal_dashboard")
+    else:
+        form = AnimalForm(instance=animal)
+
+    return render(request, "edit_animal.html", {"form": form, "animal": animal})
+
+
+@require_POST
+def delete_animal(request, animal_id):
+    animal = get_object_or_404(Animal, id=animal_id)
+    animal.delete()
+    return redirect("worker_dash")
+
+
+def sort_animals(request):
+    sort_by = request.POST.get("sort", "name")  # Default sort by name
+    animals = Animal.objects.all().order_by(sort_by)
+    return render(request, "dash_animal_list.html", {"animals": animals})
+
+
+def filter_animals(request):
+    sex = request.POST.get("sex")
+    ready_to_adopt = request.POST.get("ready_to_adopt")
+
+    animals = Animal.objects.all()
+
+    if sex:
+        animals = animals.filter(sex=sex)
+    if ready_to_adopt:
+        animals = animals.filter(ready_to_adopt=ready_to_adopt == "true")
+
+    return render(request, "dash_animal_list.html", {"animals": animals})
+
+
 def home(request):
 
-    animals = Animal.objects.order_by('?')[:3]
+    animals = Animal.objects.order_by("?")[:3]
 
-    return render(request, "home.html", {
-        'animals' : animals
-        })
+    return render(request, "home.html", {"animals": animals})
 
 
 def adoption(request, pet_id):
@@ -256,6 +321,76 @@ def edit_task(request, task_id):
     else:
         form = TaskForm(instance=task)
     return render(request, "edit_task.html", {"form": form})
+
+
+def add_task(request):
+    if request.method == "POST":
+        form = AddTaskForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("worker_dash")  # Redirect to the tasks list
+    else:
+        form = AddTaskForm()
+    return render(request, "add_task.html", {"form": form})
+
+
+def add_comment(request):
+    if request.method == "POST":
+        comment_text = request.POST.get("comment")
+
+        animal_id = request.POST.get("animal_id")
+        animal_comment = AnimalComment(animal_id=animal_id, comment=comment_text)
+        animal_comment.save()
+
+        task_id = request.POST.get("task_id")
+        task_comment = TaskComment(task_id=task_id, comment=comment_text)
+        task_comment.save()
+        return redirect("success_page")
+    else:
+        form = CommentForm()
+    return render(request, "comment.html", {"form": form})
+
+
+def volunteer_form(request):
+    shelters = Shelter.objects.all()
+    if request.method == "POST":
+        form = AdoptionForm(request.POST)
+        if form.is_valid():
+            name = form.cleaned_data["name"]
+            phone_number = form.cleaned_data["phone_number"]
+            email = form.cleaned_data["email"]
+            address_one = form.cleaned_data["address_one"]
+            address_two = form.cleaned_data.get("address_two", "")
+            city = form.cleaned_data["city"]
+            state = form.cleaned_data["state"]
+            postal = form.cleaned_data["postal"]
+            country = form.cleaned_data["country"]
+            shelter_id = request.POST.get("shelter")
+
+            address = Address.objects.create(
+                street1=address_one,
+                street2=address_two,
+                city=city,
+                state=state,
+                postal=postal,
+                country=country,
+            )
+
+            shelter = Shelter.objects.get(pk=shelter_id)
+            volunteer = Volunteer.objects.create(
+                name=name,
+                phone_number=phone_number,
+                email=email,
+                address=address,
+                start_date=datetime.date.today(),
+                shelter=shelter,
+            )
+
+            return redirect("home")
+    else:
+        form = AdoptionForm()
+
+    return render(request, "volunteer_form.html", {"form": form, "shelters": shelters})
 
 
 @require_POST

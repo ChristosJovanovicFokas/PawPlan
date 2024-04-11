@@ -1,0 +1,38 @@
+<div class="container mt-3">
+    {% for animal in animals %}
+        <div class="card mb-2">
+            <img src="{{ animal.image }}" class="card-img-top" alt="{{ animal.name }}">
+            <div class="card-body">
+                <h5 class="card-title">{{ animal.name }}</h5>
+                <p class="card-text">{{ animal.description|truncatechars:50 }}</p>
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#animalModal{{ animal.id }}">
+                    View Details
+                </button>
+            </div>
+        </div>
+
+        <!-- Animal Modal -->
+        <div class="modal fade" id="animalModal{{ animal.id }}" tabindex="-1" aria-labelledby="animalModalLabel{{ animal.id }}" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="animalModalLabel{{ animal.id }}">{{ animal.name }}</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <img src="{{ animal.image }}" class="img-fluid mb-2" alt="{{ animal.name }}">
+                        <p>{{ animal.description }}</p>
+                        <p>Color: {{ animal.color }}</p>
+                        <p>Sex: {{ animal.sex }}</p>
+                        <p>Age: {{ animal.age }}</p>
+                        <p>Ready to Adopt: {{ animal.ready_to_adopt }}</p>
+                        <p>Shelter: {{ animal.shelter }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% empty %}
+        <p>No animals found.</p>
+    {% endfor %}
+</div>
