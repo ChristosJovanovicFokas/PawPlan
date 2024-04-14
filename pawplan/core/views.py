@@ -221,14 +221,12 @@ def adoption(request, pet_id):
                     phone_number=phone_number,
                     email=email,
                     address=address,
-                    can_adopt=True,
+                    can_adopt=False,
                 )
                 adopter.save()
                 print("Person added to database.")
 
-            person = Person.objects.get(email=email)
-
-    return HttpResponse(f"person id: {person.pk}, pet id: {pet_id}")
+    return redirect(animal_list)
 
 
 def about_view(request):
@@ -248,11 +246,11 @@ def login(request):
         email = form.cleaned_data["email"]
         password = form.cleaned_data["password"]
 
-        worker = Worker.objects.filter(email=email, password=password)
-        print(worker)
+        worker = Worker.objects.filter(email=email, password=password).first()
 
         if worker:
             request.session["is_valid"] = True
+            request.session["worker"] = worker.email
             return redirect(worker_dash)
         else:
             return render(
@@ -260,6 +258,11 @@ def login(request):
             )
 
     return render(request, "login.html", {"loginForm": loginForm})
+
+def logout(request):
+    request.session.flush()
+
+    return redirect(home)
 
 
 def filter_tasks(request):
@@ -340,19 +343,19 @@ def add_task(request):
 @require_POST
 def add_task_comment(request, task_id):
     task = get_object_or_404(Task, pk=task_id)
-    person = request.POST.get("person")
+    worker = Worker.objects.filter(email=request.session['worker']).first()
     text = request.POST.get("text")
-    comment = TaskComment(task=task, person=person, text=text)
+    comment = TaskComment(task=task, person=worker, text=text)
     comment.save()
-    return redirect("woker_dash")
+    return redirect(worker_dash)
 
 
 @require_POST
 def add_animal_comment(request, task_id):
     animal = get_object_or_404(Animal, pk=task_id)
-    person = request.POST.get("person")
+    worker = Worker.objects.filter(email=request.session['worker']).first()
     text = request.POST.get("text")
-    comment = TaskComment(animal=animal, person=person, text=text)
+    comment = TaskComment(animal=animal, person=worker, text=text)
     comment.save()
     return redirect("worker_dash")
 
@@ -373,24 +376,56 @@ def volunteer_form(request):
             country = form.cleaned_data["country"]
             shelter_id = request.POST.get("shelter")
 
-            address = Address.objects.create(
+             # check if address is already in database. if not, insert into database.
+            if not Address.objects.filter(
                 street1=address_one,
                 street2=address_two,
                 city=city,
                 state=state,
                 postal=postal,
                 country=country,
-            )
+            ).exists():
+
+                address = Address.objects.create(
+                    street1=address_one,
+                    street2=address_two,
+                    city=city,
+                    state=state,
+                    postal=postal,
+                    country=country,
+                )
+                address.save()
+                print("Address added to database")
 
             shelter = Shelter.objects.get(pk=shelter_id)
-            volunteer = Volunteer.objects.create(
-                name=name,
-                phone_number=phone_number,
-                email=email,
-                address=address,
-                start_date=datetime.date.today(),
-                shelter=shelter,
-            )
+
+            if not Person.objects.filter(email=email).exists():
+
+                address = Address.objects.get(
+                    street1=address_one,
+                    street2=address_two,
+                    city=city,
+                    state=state,
+                    postal=postal,
+                    country=country,
+                )
+
+                volunteer = Volunteer.objects.create(
+                    name=name,
+                    phone_number=phone_number,
+                    email=email,
+                    address=address,
+                    start_date=datetime.date.today(),
+                    shelter=shelter,
+                )
+                volunteer.save()
+
+            task = Task(title="Volunteer",
+                        description=f"{name} is interested in being a volunteer. Please contact them.",
+                        required_role="MA",
+                        shelter=shelter)
+            task.save()
+            print("Saved task")
 
             return redirect("home")
     else:

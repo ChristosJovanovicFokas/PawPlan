@@ -41,6 +41,7 @@ urlpatterns = [
     path("filter_animals/", views.filter_animals, name="filter_animals"),
     path("sort_animals/", views.sort_animals, name="sort_animals"),
     path("login/", views.login, name="login"),
+    path("logout/", views.logout, name="logout"),
     path("task/add/", views.add_task, name="add_task"),
     path("task/edit/<int:task_id>/", views.edit_task, name="edit_task"),
     path("task/delete/<int:task_id>/", views.delete_task, name="delete_task"),

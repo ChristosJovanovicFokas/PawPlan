@@ -81,6 +81,7 @@ steve_p = m.Worker.objects.create(
     email="stevepic95@gmail.com",
     address=addresses["steve_p"],
     username="stevep95",
+    password="password",
     role="RE",
     hire_date=timezone.now(),
     shelter=shelter,
@@ -91,6 +92,7 @@ steve_b = m.Worker.objects.create(
     email="steveb@email.com",
     address=addresses["steve_b"],
     username="steveb235",
+    password="password",
     role="MA",
     hire_date=timezone.now(),
     shelter=shelter,
@@ -101,6 +103,7 @@ ricky_k = m.Worker.objects.create(
     email="rickyk@email.com",
     address=addresses["ricky_k"],
     username="rickyk777",
+    password="password",
     role="VT",
     hire_date=timezone.now(),
     shelter=shelter,
@@ -111,6 +114,7 @@ derek_p = m.Worker.objects.create(
     email="derekp@email.com",
     address=addresses["derek_p"],
     username="derekp777",
+    password="password",
     role="RE",
     hire_date=timezone.now(),
     shelter=shelter,
@@ -363,20 +367,17 @@ bubba_comment1 = m.AnimalComment.objects.create(
     person=steve_b,
     text="Bubba bit me",
     animal=animal_list[0],
-    time_stamp=timezone.now() - datetime.timedelta(hours=28),
 )
 
 bubba_comment2 = m.AnimalComment.objects.create(
     person=ricky_k,
     text="No way",
     animal=animal_list[0],
-    time_stamp=timezone.now() - datetime.timedelta(hours=27),
 )
 jennifer_coment1 = m.AnimalComment.objects.create(
     person=derek_p,
     text="Who named this turtle Jennifer",
     animal=animal_list[3],
-    time_stamp=timezone.now() - datetime.timedelta(hours=41),
 )
 
 for comment in [bubba_comment1, bubba_comment2, jennifer_coment1]:
