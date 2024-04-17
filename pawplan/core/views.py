@@ -24,7 +24,7 @@ from .forms import (
 )
 
 from django.core.paginator import Paginator
-import datetime
+from datetime import datetime
 
 # Create your views here.
 
@@ -328,6 +328,14 @@ def edit_task(request, task_id):
         form = TaskForm(instance=task)
     return render(request, "edit_task.html", {"form": form})
 
+
+def complete_task(request, task_id):
+    task = get_object_or_404(Task, id=task_id)
+   
+    task.completion_datetime = datetime.now()
+    task.save()
+
+    return redirect("worker_dash")
 
 def add_task(request):
     if request.method == "POST":
