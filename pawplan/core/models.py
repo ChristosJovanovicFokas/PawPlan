@@ -368,6 +368,12 @@ class Task(models.Model):
 
     def __str__(self):
         return self.title
+    
+class TaskItem(models.Model):
+    item_number = models.IntegerField()
+    text = models.TextField()
+    is_complete = models.BooleanField()
+    task = models.ForeignKey(Task, on_delete=models.CASCADE)
 
 
 class Comment(models.Model):

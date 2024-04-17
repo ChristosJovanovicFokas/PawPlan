@@ -2,15 +2,37 @@
 <div class="container">
 
     <h2>Add New Task</h2>
-    <form action="" method="post">
+    <form id="task" action="" method="post">
         {% csrf_token %}
         
         {{ form.as_p }}
         
+        <div id="item-container">
+
+        </div>
+        <button onClick="createItem()">Add Item</button>
+        <button onClick="removeItem()">Remove Item</button>
         <button type="submit" class="btn btn-primary">Save New Task</button>
 
         <a href="{% url 'worker_dash' %}" class="btn btn-secondary">Cancel</a>
     </form>
 </div>
+
+<script>
+    var div = document.getElementById('item-container')
+
+    function createItem(){
+        var item = document.createElement("input");
+        item.setAttribute("type", "text");
+        item.setAttribute("name", "Item");
+        item.setAttribute("placeholder", "Add task item");
+        div.appendChild(item);
+    }
+
+    function removeItem(){
+        div.removeChild(div.lastChild)
+    }
+
+</script>
 
 {% endblock %}
