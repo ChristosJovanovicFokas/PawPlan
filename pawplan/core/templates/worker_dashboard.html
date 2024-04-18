@@ -61,9 +61,11 @@
                         <button type="submit" class="btn btn-secondary">Apply Sort</button>
                     </form>
                 </div>
+                {% if request.session.is_manager %}
                 <div class="col-md-4 d-flex align-items-end">
                     <a href="{% url 'add_task' %}" class="btn btn-success">Add Task</a>
                 </div>
+                {% endif %}
             </div>
 
             <div id="task-list">
@@ -114,7 +116,9 @@
                     </form>
                 </div>
             </div>
+            {% if request.session.is_manager %}
             <a href="{% url 'add_animal' %}" class="btn btn-success mb-3">Add Animal</a>
+            {% endif %}
             <div id="animal-list">
                 {% include 'dash_animal_list.html' %}
             </div>
