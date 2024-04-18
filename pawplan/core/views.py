@@ -381,7 +381,8 @@ def release_task(request, task_id):
 def swap_task(request, task_id):
     task = get_object_or_404(Task, id=task_id)
    
-    task.assignee = request.user
+    worker = Worker.objects.get(email=request.session.get("worker"))
+    task.assignee = worker
     task.is_released = False
     task.save()
 

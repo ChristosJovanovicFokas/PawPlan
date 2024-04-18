@@ -16,6 +16,11 @@
                         data-bs-target="#taskModal{{ task.id }}">
                     View Details
                 </button>
+                {% if task.is_released %}
+                <a href="{% url 'swap_task' task.id %}" class="btn btn-secondary">Pick Up</a>
+                {% else %}
+                <a href="{% url 'release_task' task.id %}" class="btn btn-secondary">Release</a>
+                {% endif %}
             </div>
         </div>
 
@@ -64,7 +69,6 @@
                     {% if request.session.is_manager %}
                     <div class="modal-footer">
                         <a href="{% url 'edit_task' task.id %}" class="btn btn-secondary">Edit</a>
-                        <a href="{% url 'release_task' task.id %}" class="btn btn-secondary">Release</a>
                         <a href="{% url 'complete_task' task.id %}" class="btn btn-secondary">Mark as Complete</a>
                         <form action="{% url 'delete_task' task.id %}" method="post" style="display: inline;">
                             {% csrf_token %}

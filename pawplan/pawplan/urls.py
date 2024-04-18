@@ -60,5 +60,6 @@ urlpatterns = [
     ),
     path('display_all_comments/', views.display_all_comments, name='display_all_comments'),
     path("task_items/", views.task_items, name="task_items"),
-    path("complete_item/<int:item_id>", views.complete_item, name="complete_item")
+    path("complete_item/<int:item_id>", views.complete_item, name="complete_item"),
+    path("swap_task/<int:task_id>", views.swap_task, name="swap_task")
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
