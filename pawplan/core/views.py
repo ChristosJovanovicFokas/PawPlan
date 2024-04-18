@@ -348,6 +348,14 @@ def add_task(request):
     return render(request, "add_task.html", {"form": form})
 
 
+def release_task(request, task_id):
+    task = get_object_or_404(Task, id=task_id)
+   
+    task.is_released = True
+    task.save()
+
+    return redirect("worker_dash")
+
 @require_POST
 def add_task_comment(request, task_id):
     task = get_object_or_404(Task, pk=task_id)
