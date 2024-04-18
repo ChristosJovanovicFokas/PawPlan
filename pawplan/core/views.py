@@ -146,6 +146,14 @@ def sort_animals(request):
     animals = Animal.objects.all().order_by(sort_by)
     return render(request, "dash_animal_list.html", {"animals": animals})
 
+def display_all_comments(request):
+    # Fetch all animal comments and task comments from the database
+    animal_comments = AnimalComment.objects.all()
+    task_comments = TaskComment.objects.all()
+    
+    # Render the HTML template and pass the comments as context variables
+    return render(request, 'all_comments.html', {'animal_comments': animal_comments, 'task_comments': task_comments})
+
 
 def filter_animals(request):
     sex = request.POST.get("sex")
