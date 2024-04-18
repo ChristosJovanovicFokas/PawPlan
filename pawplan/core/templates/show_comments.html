@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Comments</title>
+</head>
+<body>
+    <h1>All Comments</h1>
+    <div style="display: flex; justify-content: space-between;">
+        <div style="width: 45%;">
+            <h2>Animal Comments</h2>
+            <ul>
+                {% for animal_comment in animal_comments %}
+                    <li>{{ animal_comment.text }} - {{ animal_comment.person }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div style="width: 45%;">
+            <h2>Task Comments</h2>
+            <ul>
+                {% for task_comment in task_comments %}
+                    <li>{{ task_comment.text }} - {{ task_comment.person }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
