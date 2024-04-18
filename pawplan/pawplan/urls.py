@@ -41,12 +41,13 @@ urlpatterns = [
     path("filter_animals/", views.filter_animals, name="filter_animals"),
     path("sort_animals/", views.sort_animals, name="sort_animals"),
     path("login/", views.login, name="login"),
+    path("shelter/edit/<int:shelter_id>/", views.edit_shelter, name="edit_shelter"),
     path("logout/", views.logout, name="logout"),
     path("task/add/", views.add_task, name="add_task"),
     path("task/edit/<int:task_id>/", views.edit_task, name="edit_task"),
     path("task/delete/<int:task_id>/", views.delete_task, name="delete_task"),
     path("task/complete/<int:task_id>/", views.complete_task, name="complete_task"),
-    path("task/release/<int:task_id>/", views.release_task, name="release_task"),    
+    path("task/release/<int:task_id>/", views.release_task, name="release_task"),
     path("volunteer/", views.volunteer_form, name="volunteer_form"),
     path(
         "add_task_comment/<int:task_id>/",
@@ -58,8 +59,10 @@ urlpatterns = [
         views.add_animal_comment,
         name="add_animal_comment",
     ),
-    path('display_all_comments/', views.display_all_comments, name='display_all_comments'),
+    path(
+        "display_all_comments/", views.display_all_comments, name="display_all_comments"
+    ),
     path("task_items/", views.task_items, name="task_items"),
     path("complete_item/<int:item_id>", views.complete_item, name="complete_item"),
-    path("swap_task/<int:task_id>", views.swap_task, name="swap_task")
+    path("swap_task/<int:task_id>", views.swap_task, name="swap_task"),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
