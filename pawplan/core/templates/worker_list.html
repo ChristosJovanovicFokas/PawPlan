@@ -1,0 +1,50 @@
+<div class="container mt-3">
+    {% for worker in workers %}
+        <div class="card mb-2">
+            <div class="card-body">
+                <h5 class="card-title">{{ worker.name }}</h5>
+                <p class="card-text">
+                    Role: {{ worker.get_role_display }}<br>
+                    Shelter: {{ worker.shelter.name }}<br>
+                    Hire Date: {{ worker.hire_date|date:"Y-m-d" }}<br>
+                    Phone: {{ worker.phone_number }}<br>
+                    Email: {{ worker.email }}
+                </p>
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#workerModal{{ worker.id }}">
+                    View Details
+                </button>
+            </div>
+        </div>
+
+        <!-- Worker Modal -->
+        <div class="modal fade" id="workerModal{{ worker.id }}" tabindex="-1" aria-labelledby="workerModalLabel{{ worker.id }}" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="workerModalLabel{{ worker.id }}">{{ worker.name }}</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Name: {{ worker.name }}</p>
+                        <p>Role: {{ worker.get_role_display }}</p>
+                        <p>Shelter: {{ worker.shelter.name }}</p>
+                        <p>Username: {{ worker.username }}</p>
+                        <p>Hire Date: {{ worker.hire_date|date:"Y-m-d" }}</p>
+                        <p>Phone: {{ worker.phone_number }}</p>
+                        <p>Email: {{ worker.email }}</p>
+                        <p>Address: {{ worker.address }}</p>
+                    </div>
+                    {% if request.session.is_manager %}
+                    <div class="modal-footer">
+                        <a href="{% url 'edit_worker' worker.id %}" class="btn btn-secondary">Edit</a>
+                        <a href="{% url 'remove_worker' worker.id %}" class="btn btn-danger">Remove</a>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    {% empty %}
+        <p>No workers found.</p>
+    {% endfor %}
+</div>
