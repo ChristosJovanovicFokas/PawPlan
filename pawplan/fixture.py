@@ -361,6 +361,30 @@ feed_cats_task = m.Task.objects.create(
 for task in [clean_toilets_task, post_jobs_task, feed_cats_task]:
     task.save()
 
+task_item_list = []
+
+task_item_list.append(m.TaskItem.objects.create(item_number = 1, 
+                                      text="Clean the toilets",
+                                      is_complete=False,
+                                      task=clean_toilets_task ))
+
+task_item_list.append(m.TaskItem.objects.create(item_number = 1, 
+                                                    text="Post available jobs on site one",
+                                                    is_complete=False,
+                                                    task=post_jobs_task ))
+
+task_item_list.append(m.TaskItem.objects.create(item_number = 2, 
+                                                    text="Post available jobs on site two",
+                                                    is_complete=False,
+                                                    task=post_jobs_task ))
+
+task_item_list.append(m.TaskItem.objects.create(item_number = 1, 
+                                                    text="Feed the cats",
+                                                    is_complete=False,
+                                                    task=feed_cats_task ))
+
+for item in task_item_list:
+    item.save()
 
 # Add some comments to the animals
 bubba_comment1 = m.AnimalComment.objects.create(

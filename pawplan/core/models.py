@@ -193,6 +193,12 @@ class Animal(PolymorphicModel):
                 )
                 automatic_task.save()
 
+                task_item = TaskItem.objects.create(item_number=1,
+                                                    text=task_outline["description"],
+                                                    is_complete=False,
+                                                    task=automatic_task)
+                task_item.save()
+
     def __str__(self):
         return self.name
 
