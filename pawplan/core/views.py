@@ -260,6 +260,10 @@ def login(request):
         if worker:
             request.session["is_valid"] = True
             request.session["worker"] = worker.email
+            if worker.role == 'MA':
+                request.session["is_manager"] = True
+            else:
+                request.session["is_manager"] = False
             return redirect(worker_dash)
         else:
             return render(
