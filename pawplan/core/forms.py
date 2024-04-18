@@ -21,8 +21,11 @@ class AddTaskForm(forms.ModelForm):
             "due_date": forms.DateInput(attrs={"type": "date"}),
         }
 
+    task_item = forms.CharField(label="Task Item", max_length=400, required=True)
+
 
 class TaskForm(forms.ModelForm):
+
     class Meta:
         model = Task
         fields = [
