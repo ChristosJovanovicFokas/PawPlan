@@ -364,7 +364,22 @@ class Task(models.Model):
 
     @property
     def is_completed(self):
-        return self.completion_datetime not in (None, "")
+        items = TaskItem.objects.filter(task=self.id, is_complete=False)
+        print(items)
+        if not items:
+            return True     
+        else:
+            return False
+        
+    @property
+    def num_items(self):
+        items = TaskItem.objects.filter(task=self.id)
+        return len(items)
+    
+    @property
+    def num_items_complete(self):
+        items = TaskItem.objects.filter(task=self.id, is_complete=True)
+        return len(items)
 
     def __str__(self):
         return self.title

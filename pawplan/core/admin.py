@@ -14,6 +14,7 @@ model_list = [
     m.Task,
     m.AnimalComment,
     m.TaskComment,
+    m.TaskItem
 ]
 
 for model in model_list:
