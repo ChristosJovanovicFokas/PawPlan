@@ -366,7 +366,8 @@ class Task(models.Model):
     completion_datetime = models.DateTimeField(blank=True, null=True)
     creation_datetime = models.DateTimeField(auto_now_add=True)
     required_role = models.CharField(max_length=2, choices=REQUIRED_ROLE_CHOICES)
-    animal = models.ForeignKey(Animal, on_delete=models.CASCADE, blank=True, null=True)
+    animal = models.ForeignKey(Animal, on_delete=models.CASCADE, null=True)
+    is_released = models.BooleanField(default=False)
 
     @property
     def is_completed(self):
