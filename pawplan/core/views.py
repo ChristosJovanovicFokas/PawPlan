@@ -356,6 +356,16 @@ def release_task(request, task_id):
 
     return redirect("worker_dash")
 
+
+def swap_task(request, task_id):
+    task = get_object_or_404(Task, id=task_id)
+   
+    task.assignee = request.user
+    task.is_released = False
+    task.save()
+
+    return redirect("worker_dash")
+
 @require_POST
 def add_task_comment(request, task_id):
     task = get_object_or_404(Task, pk=task_id)
