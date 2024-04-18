@@ -1,16 +1,47 @@
-{% block content %}
+{% include 'navbar.html' %}
+{% load static %}
+
+<head>
+    <title>Add New Task</title>
+    <link rel="stylesheet" href="{% static '/css/edit.css' %}">
+</head>
+<body>
+
 <div class="container">
 
     <h2>Add New Task</h2>
-    <form action="" method="post">
+    <form id="task" action="" method="post">
         {% csrf_token %}
         
         {{ form.as_p }}
         
+        <div id="item-container">
+
+        </div>
+        <button type="button" class="btn btn-primary" onClick="createItem()">Add Item</button>
+        <button type="button" class="btn btn-primary" onClick="removeItem()">Remove Item</button>
         <button type="submit" class="btn btn-primary">Save New Task</button>
 
         <a href="{% url 'worker_dash' %}" class="btn btn-secondary">Cancel</a>
     </form>
 </div>
 
-{% endblock %}
+<script>
+    var div = document.getElementById('item-container')
+
+    function createItem(){
+        var item = document.createElement("input");
+        item.setAttribute("type", "text");
+        item.setAttribute("name", "item");
+        item.setAttribute("placeholder", "Add task item");
+        div.appendChild(item);
+    }
+
+    function removeItem(){
+        div.removeChild(div.lastChild)
+    }
+
+</script>
+
+</body>
+</html>

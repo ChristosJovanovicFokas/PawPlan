@@ -13,6 +13,7 @@ from .models import (
     AnimalComment,
     TaskComment,
     Volunteer,
+    TaskItem
 )
 from .forms import (
     TaskForm,
@@ -96,7 +97,7 @@ def worker_dash(request):
     tasks = Task.objects.all().prefetch_related("taskcomment_set")
     animals = Animal.objects.all().prefetch_related("animalcomment_set")
     workers = Worker.objects.all()
-
+    
     return render(
         request,
         "worker_dashboard.html",
@@ -144,6 +145,14 @@ def sort_animals(request):
     sort_by = request.POST.get("sort", "name")  # Default sort by name
     animals = Animal.objects.all().order_by(sort_by)
     return render(request, "dash_animal_list.html", {"animals": animals})
+
+def display_all_comments(request):
+    # Fetch all animal comments and task comments from the database
+    animal_comments = AnimalComment.objects.all()
+    task_comments = TaskComment.objects.all()
+    
+    # Render the HTML template and pass the comments as context variables
+    return render(request, 'all_comments.html', {'animal_comments': animal_comments, 'task_comments': task_comments})
 
 
 def filter_animals(request):
@@ -251,6 +260,10 @@ def login(request):
         if worker:
             request.session["is_valid"] = True
             request.session["worker"] = worker.email
+            if worker.role == 'MA':
+                request.session["is_manager"] = True
+            else:
+                request.session["is_manager"] = False
             return redirect(worker_dash)
         else:
             return render(
@@ -341,7 +354,15 @@ def add_task(request):
     if request.method == "POST":
         form = AddTaskForm(request.POST)
         if form.is_valid():
-            form.save()
+            task = form.save()
+
+            item_text_list = list(request.POST.getlist('item'))
+            item_text_list.insert(0, form.cleaned_data['task_item'])
+
+            for i, item in enumerate(item_text_list):
+                task_item = TaskItem.objects.create(item_number=i+1, text=item, is_complete=False, task=task)
+                task_item.save()
+            
             return redirect("worker_dash")  # Redirect to the tasks list
     else:
         form = AddTaskForm()
@@ -465,3 +486,17 @@ def delete_task(request, task_id):
     task = get_object_or_404(Task, id=task_id)
     task.delete()
     return redirect("worker_dash")  # Redirect to the tasks list
+
+@require_POST
+def complete_item(request, item_id):
+    TaskItem.objects.filter(pk=item_id).update(is_complete=True)
+    return redirect("worker_dash")
+
+
+def task_items(request):
+    task_id = request.GET.get('task_id')
+    task_item_list = TaskItem.objects.filter(task=task_id)
+
+    return render(request, "partials/task_item_list.html" ,{
+        'task_items' : task_item_list
+    })

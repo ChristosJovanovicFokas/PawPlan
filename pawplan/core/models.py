@@ -193,6 +193,12 @@ class Animal(PolymorphicModel):
                 )
                 automatic_task.save()
 
+                task_item = TaskItem.objects.create(item_number=1,
+                                                    text=task_outline["description"],
+                                                    is_complete=False,
+                                                    task=automatic_task)
+                task_item.save()
+
     def __str__(self):
         return self.name
 
@@ -365,10 +371,31 @@ class Task(models.Model):
 
     @property
     def is_completed(self):
-        return self.completion_datetime not in (None, "")
+        items = TaskItem.objects.filter(task=self.id, is_complete=False)
+        print(items)
+        if not items:
+            return True     
+        else:
+            return False
+        
+    @property
+    def num_items(self):
+        items = TaskItem.objects.filter(task=self.id)
+        return len(items)
+    
+    @property
+    def num_items_complete(self):
+        items = TaskItem.objects.filter(task=self.id, is_complete=True)
+        return len(items)
 
     def __str__(self):
         return self.title
+    
+class TaskItem(models.Model):
+    item_number = models.IntegerField()
+    text = models.TextField()
+    is_complete = models.BooleanField()
+    task = models.ForeignKey(Task, on_delete=models.CASCADE)
 
 
 class Comment(models.Model):

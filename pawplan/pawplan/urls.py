@@ -54,8 +54,11 @@ urlpatterns = [
         name="add_task_comment",
     ),
     path(
-        "add_animal_comment/<int:task_id>/",
+        "add_animal_comment/<int:pet_id>/",
         views.add_animal_comment,
         name="add_animal_comment",
     ),
+    path('display_all_comments/', views.display_all_comments, name='display_all_comments'),
+    path("task_items/", views.task_items, name="task_items"),
+    path("complete_item/<int:item_id>", views.complete_item, name="complete_item")
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
