@@ -52,7 +52,7 @@ urlpatterns = [
         name="add_task_comment",
     ),
     path(
-        "add_animal_comment/<int:task_id>/",
+        "add_animal_comment/<int:pet_id>/",
         views.add_animal_comment,
         name="add_animal_comment",
     ),
