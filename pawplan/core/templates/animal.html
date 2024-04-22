@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
 {% block content %}
 <html>
     <head>
@@ -13,16 +14,36 @@
                 <div>Color: {{ animal.color }}</div>
                 <div>Sex: {{ animal.sex }}</div>
                 <div>Description: {{ animal.description }}</div>
-                <a href="{% url 'animal_list' %}">Back</a>
+                <a href="{% url 'animal_list' %}" class="btn btn-primary">Back</a>
+                <button type="button" 
+                        class="btn btn-primary" 
+                        data-bs-toggle="modal" 
+                        data-bs-target="#adoptModal">
+                    Adopt
+                </button>
             </div>
 
-            <div id="form-container">
-                <h3>Adoption Form</h1>
-                <form action="adoption/{{ animal.pk }}" method="post">
-                    {% csrf_token %} 
-                    {{ adoptionForm }} 
-                    <input type="submit" value="Adopt">
-                </form>
+            
+        </div>
+
+        <!-- adopt Modal -->
+        <div class="modal fade" id="adoptModal" tabindex="-1" aria-labelledby="adoptModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="adoptModalLabel">Adoption Form</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form method="post">
+                            {% csrf_token %}
+                            {{form|crispy}}
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                    </div>
+                </div>
             </div>
         </div>
     </body>

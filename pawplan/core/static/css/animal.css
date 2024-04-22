@@ -14,4 +14,5 @@ img {
 
 #form-container {
     margin: 20px 10px 20px 20px;
+    min-width: 70%;
 }

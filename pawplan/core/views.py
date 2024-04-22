@@ -82,7 +82,7 @@ def animal(request, pet_id):
     adoptionForm = AdoptionForm()
 
     return render(
-        request, "animal.html", {"animal": animal, "adoptionForm": adoptionForm}
+        request, "animal.html", {"animal": animal, "form": adoptionForm}
     )
 
 

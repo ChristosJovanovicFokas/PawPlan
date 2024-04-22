@@ -1,4 +1,5 @@
 {% include 'navbar.html' %}
+{% load crispy_forms_tags %}
 {% load static %}
 
 <!DOCTYPE html>
@@ -15,8 +16,8 @@
             <h1>Volunteer Form</h1>
             <form method="post">
                 {% csrf_token %}
-                {{ form.as_p }}
-
+                {{ form|crispy }}
+                <div id="form-elements">
                 <label for="shelter">Select Shelter:</label>
                 <select id="shelter" name="shelter">
                     {% for shelter in shelters %}
@@ -24,7 +25,8 @@
                     {% endfor %}
                 </select>
 
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button id="submit" type="submit" class="btn btn-primary">Submit</button>
+                </div>
             </form>
         </div>
     </div>

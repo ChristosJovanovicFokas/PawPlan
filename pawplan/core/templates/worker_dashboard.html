@@ -12,14 +12,6 @@
 <div class="container mt-3">
     <h1>Dashboard</h1>
     <div class="row">
-        <!-- Navigation Column -->
-        <div class="col-md-2">
-            <div class="nav flex-column mb-3">
-                <a href="{% url 'manage_employees' %}" class="btn btn-primary mb-2">Manage Employees</a>
-                <a href="{% url 'manage_shelter_info' %}" class="btn btn-primary mb-2">Manage Shelter Info</a>
-            </div>
-        </div>
-        
         <!-- Main Content Column -->
         <div class="col-md-10">
             <div class="row">
@@ -76,7 +68,7 @@
                             </form>
                         </div>
                         {% if request.session.is_manager %}
-                        <div class="col-md-4 d-flex align-items-end">
+                        <div style="margin-bottom: 1rem;" class="col-md-4 d-flex align-items-end">
                             <a href="{% url 'add_task' %}" class="btn btn-success">Add Task</a>
                         </div>
                         {% endif %}

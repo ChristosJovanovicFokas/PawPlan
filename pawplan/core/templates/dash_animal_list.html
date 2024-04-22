@@ -1,6 +1,6 @@
-<div class="container mt-3">
+<div class = "overflow-auto" style="max-height: 800px;" class="container mt-3">
     {% for animal in animals %}
-        <div class="card mb-2">
+        <div  class="card mb-2">
             <img src="{{ animal.image }}" class="card-img-top" alt="{{ animal.name }}">
             <div class="card-body">
                 <h5 class="card-title">{{ animal.name }}</h5>
