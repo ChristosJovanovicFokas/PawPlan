@@ -63,5 +63,6 @@ urlpatterns = [
     path("complete_item/<int:item_id>", views.complete_item, name="complete_item"),
     path("swap_task/<int:task_id>", views.swap_task, name="swap_task"),
     path("manage_employees/", views.worker_dash, name="manage_employees"),
-    path("manage_shelter_info/", views.worker_dash, name="manage_shelter_info")
+    path("manage_shelter_info/", views.worker_dash, name="manage_shelter_info"),
+    path("animal/adoption/<int:pet_id>", views.adoption, name="adoption")
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

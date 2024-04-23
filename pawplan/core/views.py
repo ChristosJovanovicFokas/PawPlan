@@ -180,6 +180,7 @@ def adoption(request, pet_id):
     if request.method == "POST":
         form = AdoptionForm(request.POST)
         if form.is_valid():
+            print("valid")
             full_name = form.cleaned_data["name"]
             phone_number = form.cleaned_data["phone_number"]
             email = form.cleaned_data["email"]
@@ -234,6 +235,19 @@ def adoption(request, pet_id):
                 )
                 adopter.save()
                 print("Person added to database.")
+
+            animal = Animal.objects.get(id=pet_id)
+
+            shelter = Animal.objects.filter(id=pet_id).select_related('shelter')
+            print(shelter)
+
+            task = Task(title="Volunteer",
+                description=f"{full_name} is interested in being a volunteer. Please contact them.",
+                required_role="MA",
+                shelter=shelter,
+                animal=animal)
+            task.save()
+            print("Saved task")
 
     return redirect(animal_list)
 
