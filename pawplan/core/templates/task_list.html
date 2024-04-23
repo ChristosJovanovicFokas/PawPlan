@@ -68,7 +68,7 @@
                         </form>
                     </div>
                     <div class="modal-footer">
-                        {% if task.num_items_complete == task.num_items and not task.is_completed %}
+                        {% if task.num_items_complete == task.num_items and not task.is_completed%}
                         <a href="{% url 'complete_task' task.id %}" class="btn btn-success">Mark as Complete</a>
                         {% endif %}
                         {% if request.session.is_manager %}

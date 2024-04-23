@@ -371,12 +371,10 @@ class Task(models.Model):
 
     @property
     def is_completed(self):
-        items = TaskItem.objects.filter(task=self.id, is_complete=False)
-        print(items)
-        if not items:
-            return True     
+        if self.completion_datetime is None:
+            return False    
         else:
-            return False
+            return True
         
     @property
     def num_items(self):

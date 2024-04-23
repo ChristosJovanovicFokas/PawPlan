@@ -238,15 +238,21 @@ def adoption(request, pet_id):
 
             animal = Animal.objects.get(id=pet_id)
 
-            shelter = Animal.objects.filter(id=pet_id).select_related('shelter')
-            print(shelter)
+            shelter = animal.shelter
 
-            task = Task(title="Volunteer",
-                description=f"{full_name} is interested in being a volunteer. Please contact them.",
+            task = Task(title="Adoption",
+                description=f"{full_name} is interested in adopting. Please contact them.",
                 required_role="MA",
                 shelter=shelter,
                 animal=animal)
             task.save()
+
+            task_item = TaskItem(item_number = 1, text="Contact client", is_complete=False, task=task)
+            task_item.save()
+            task_item = TaskItem(item_number = 2, text="Fill out paperwork", is_complete=False, task=task)
+            task_item.save()
+            task_item = TaskItem(item_number = 3, text="Interview client", is_complete=False, task=task)
+            task_item.save()
             print("Saved task")
 
     return redirect(animal_list)
@@ -487,6 +493,8 @@ def volunteer_form(request):
                         required_role="MA",
                         shelter=shelter)
             task.save()
+            task_item = TaskItem(item_number = 1, text="contact volunteer", is_complete = False, task=task)
+            task_item.save()
             print("Saved task")
 
             return redirect("home")
