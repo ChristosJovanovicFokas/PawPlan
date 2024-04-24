@@ -125,7 +125,7 @@ def add_animal(request):
         form = AnimalForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect(reverse("animal_dashboard"))
+            return redirect(reverse("worker_dash"))
     else:
         form = AnimalForm()
 
@@ -138,7 +138,7 @@ def edit_animal(request, animal_id):
         form = AnimalForm(request.POST, instance=animal)
         if form.is_valid():
             form.save()
-            return redirect("animal_dashboard")
+            return redirect("worker_dash")
     else:
         form = AnimalForm(instance=animal)
 
