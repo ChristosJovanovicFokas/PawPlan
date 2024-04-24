@@ -512,7 +512,7 @@ def volunteer_form(request):
                     phone_number=phone_number,
                     email=email,
                     address=address,
-                    start_date=datetime.date.today(),
+                    start_date=datetime.date.now(),
                     shelter=shelter,
                 )
                 volunteer.save()
