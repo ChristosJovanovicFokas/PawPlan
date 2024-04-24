@@ -1,4 +1,5 @@
 import datetime
+import random
 
 import requests
 import core.models as m
@@ -142,14 +143,16 @@ for person in [dr_baliga, steve_p, steve_b, ricky_k, derek_p, connor_h, christos
 
 # Create new animal objects (which will also automatically create Task objects for each)
 
+
 def get_jpg():
     run = True
     while run:
         response = requests.get("https://random.dog/woof.json")
         img_info = dict(response.json())
-        if img_info.get('url').split('.')[2] == 'jpg':
+        if img_info.get("url").split(".")[2] == "jpg":
             return img_info
-    
+
+
 animal_list = []
 
 img_info = get_jpg()
@@ -363,25 +366,38 @@ for task in [clean_toilets_task, post_jobs_task, feed_cats_task]:
 
 task_item_list = []
 
-task_item_list.append(m.TaskItem.objects.create(item_number = 1, 
-                                      text="Clean the toilets",
-                                      is_complete=False,
-                                      task=clean_toilets_task ))
+task_item_list.append(
+    m.TaskItem.objects.create(
+        item_number=1,
+        text="Clean the toilets",
+        is_complete=False,
+        task=clean_toilets_task,
+    )
+)
 
-task_item_list.append(m.TaskItem.objects.create(item_number = 1, 
-                                                    text="Post available jobs on site one",
-                                                    is_complete=False,
-                                                    task=post_jobs_task ))
+task_item_list.append(
+    m.TaskItem.objects.create(
+        item_number=1,
+        text="Post available jobs on site one",
+        is_complete=False,
+        task=post_jobs_task,
+    )
+)
 
-task_item_list.append(m.TaskItem.objects.create(item_number = 2, 
-                                                    text="Post available jobs on site two",
-                                                    is_complete=False,
-                                                    task=post_jobs_task ))
+task_item_list.append(
+    m.TaskItem.objects.create(
+        item_number=2,
+        text="Post available jobs on site two",
+        is_complete=False,
+        task=post_jobs_task,
+    )
+)
 
-task_item_list.append(m.TaskItem.objects.create(item_number = 1, 
-                                                    text="Feed the cats",
-                                                    is_complete=False,
-                                                    task=feed_cats_task ))
+task_item_list.append(
+    m.TaskItem.objects.create(
+        item_number=1, text="Feed the cats", is_complete=False, task=feed_cats_task
+    )
+)
 
 for item in task_item_list:
     item.save()
@@ -422,3 +438,15 @@ feed_cats_task_comment = m.TaskComment.objects.create(
 
 for comment in [clean_toilets_task_comment, feed_cats_task_comment]:
     comment.save()
+
+
+# All tasks have the same due_date right now, so now we cycle through all tasks
+# and randomize things a bit
+for task in m.Task.objects.all():
+    day_delta = random.randint(-37, 23)
+    hour_delta = random.randint(1, 2)
+    minute_delta = random.randint(1, 9)
+    task.due_date = task.due_date + datetime.timedelta(
+        days=day_delta, hours=hour_delta, minutes=minute_delta
+    )
+    task.save()
