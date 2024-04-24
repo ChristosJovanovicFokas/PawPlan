@@ -9,13 +9,13 @@
 
 <script src="https://unpkg.com/htmx.org@latest"></script>
 
-<div class="container mt-3">
+<div class="container col-10">
     <h1>Dashboard</h1>
     <div class="row">
         <!-- Main Content Column -->
-        <div class="col-md-10">
+        <div class="col-md-12">
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-5">
                     <h2>Tasks</h2>
                     <div class="row mb-3">
                         <div class="col-md-4">
@@ -79,7 +79,7 @@
                     </div>
                 </div>
             
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <h2>Animals</h2>
                     <div class="row mb-3">
                         <div class="col-12">
@@ -129,7 +129,7 @@
                     </div>
                 </div>
 
-                <div class="col-md-6">
+                <div class="col-md-3">
                     <h2>Employees</h2>
                     {% if request.session.is_manager %}
                     <a href="{% url 'add_worker' %}" class="btn btn-success mb-3">Add Worker</a>
