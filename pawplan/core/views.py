@@ -22,6 +22,7 @@ from .forms import (
     CommentForm,
     AnimalForm,
     LoginForm,
+    WorkerForm
 )
 
 from django.core.paginator import Paginator
@@ -523,3 +524,28 @@ def task_items(request):
     return render(request, "partials/task_item_list.html" ,{
         'task_items' : task_item_list
     })
+
+
+def add_worker(request):
+    if request.method == "POST":
+        form = WorkerForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect(reverse("worker_dash"))
+    else:
+        form = WorkerForm()
+
+    return render(request, "add_worker.html", {"form": form})
+
+
+def edit_worker(request, worker_id):
+    worker = get_object_or_404(Worker, id=worker_id)
+    if request.method == "POST":
+        form = WorkerForm(request.POST, instance=worker)
+        if form.is_valid():
+            form.save()
+            return redirect("worker_dash")
+    else:
+        form = WorkerForm(instance=worker)
+
+    return render(request, "edit_worker.html", {"form": form, "worker": worker})
