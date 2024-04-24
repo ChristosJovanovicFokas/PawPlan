@@ -1,5 +1,5 @@
 from django import forms
-from .models import Task, AnimalComment, TaskComment, Animal
+from .models import Task, AnimalComment, TaskComment, Animal, Worker
 
 
 class AddTaskForm(forms.ModelForm):
@@ -102,3 +102,21 @@ class AdoptionForm(forms.Form):
 class LoginForm(forms.Form):
     email = forms.CharField(label="Email", max_length=200, required=True)
     password = forms.CharField(label="Password", widget=forms.PasswordInput(), required=True)
+
+
+class WorkerForm(forms.ModelForm):
+    class Meta:
+        model = Worker
+        fields = [
+            "name",
+            "username",
+            "password",
+            "role",
+            "hire_date",
+            "shelter",
+            "address"
+        ]
+        widgets = {
+            "hire_date": forms.DateInput(attrs={"type": "date"}),
+            "title": forms.TextInput(attrs={"class": "form-control"})
+        }

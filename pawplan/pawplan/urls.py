@@ -71,4 +71,6 @@ urlpatterns = [
     path("manage_employees/", views.worker_dash, name="manage_employees"),
     path("manage_shelter_info/", views.worker_dash, name="manage_shelter_info"),
     path("animal/adoption/<int:pet_id>", views.adoption, name="adoption"),
+    path("worker/add", views.add_worker, name="add_worker"),
+    path("worker/edit/<int:worker_id>", views.edit_worker, name="edit_worker"),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

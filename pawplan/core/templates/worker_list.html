@@ -1,0 +1,43 @@
+<!-- worker_list.html -->
+<div class = "overflow-auto" style="max-height: 800px;" class="container mt-3">
+    {% for worker in workers %}
+        <div class="card mb-2">
+            <div class="card-body">
+                <h5 class="card-title">{{ worker.name }}</h5>
+                <!-- Button trigger modal -->
+                <button type="button" 
+                        class="btn btn-primary" 
+                        data-bs-toggle="modal" 
+                        data-bs-target="#workerModal{{ worker.id }}">
+                    View Details
+                </button>
+            </div>
+        </div>
+
+        <!-- Worker Modal -->
+        <div class="modal fade" id="workerModal{{ worker.id }}" tabindex="-1" aria-labelledby="workerModalLabel{{ worker.id }}" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="workerModalLabel{{ worker.id }}">{{ worker.name }}</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Username: {{ worker.username }}</p>
+                        <p>Role: {{ worker.role }}</p>
+                        <p>Hire Date: {{ worker.hire_date }}</p>
+                        <p>Shelter: {{ worker.shelter }}</p>
+                        <div id="worker{{ worker.id }}">
+                        </div>
+                        
+                    </div>
+                    <div class="modal-footer">
+                        {% if request.session.is_manager %}
+                        <a href="{% url 'edit_worker' worker.id %}" class="btn btn-secondary">Edit</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
