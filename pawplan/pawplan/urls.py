@@ -46,7 +46,7 @@ urlpatterns = [
     path("task/edit/<int:task_id>/", views.edit_task, name="edit_task"),
     path("task/delete/<int:task_id>/", views.delete_task, name="delete_task"),
     path("task/complete/<int:task_id>/", views.complete_task, name="complete_task"),
-    path("task/release/<int:task_id>/", views.release_task, name="release_task"),    
+    path("task/release/<int:task_id>/", views.release_task, name="release_task"),
     path("volunteer/", views.volunteer_form, name="volunteer_form"),
     path(
         "add_task_comment/<int:task_id>/",
@@ -58,7 +58,13 @@ urlpatterns = [
         views.add_animal_comment,
         name="add_animal_comment",
     ),
-    path('display_all_comments/', views.display_all_comments, name='display_all_comments'),
+    path(
+        "api/tasks/calendar/", views.get_tasks_for_calendar, name="get_calendar_tasks"
+    ),
+    path("dashboard/calendar/", views.task_calendar, name="task_calendar"),
+    path(
+        "display_all_comments/", views.display_all_comments, name="display_all_comments"
+    ),
     path("task_items/", views.task_items, name="task_items"),
     path("complete_item/<int:item_id>", views.complete_item, name="complete_item"),
     path("swap_task/<int:task_id>", views.swap_task, name="swap_task"),
