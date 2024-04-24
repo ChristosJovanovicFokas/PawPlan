@@ -17,10 +17,14 @@
                         data-bs-target="#taskModal{{ task.id }}">
                     View Details
                 </button>
-                {% if task.is_released %}
+                {% if task.is_released and task.assignee.email != request.session.worker %}
                 <a href="{% url 'swap_task' task.id %}" class="btn btn-secondary">Pick Up</a>
-                {% else %}
+                {% elif not task.is_released and task.assignee.email == request.session.worker %}
                 <a href="{% url 'release_task' task.id %}" class="btn btn-secondary">Release</a>
+                {% endif %}
+
+                {% if task.is_released and task.assignee.email == request.session.worker %}
+                <a href="{% url 'swap_task' task.id %}" class="btn btn-secondary">Cancel Release</a>
                 {% endif %}
             </div>
         </div>

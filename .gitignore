@@ -29,6 +29,3 @@ __pycache__/
 
 # Ignore environment variables file
 .env
-
-# Ignore migrations
-migrations/

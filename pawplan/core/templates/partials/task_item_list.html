@@ -6,7 +6,9 @@
         {% else %}
             <form action="{% url 'complete_item' item.id %}" method="post" style="display: inline;">
                 {% csrf_token %}
+                {% if item.task.assignee.email == request.session.worker %}
                 <button type="submit" class="btn btn-success">Complete</button>
+                {% endif %}
             </form>
         {% endif %}
     {% endfor %}
