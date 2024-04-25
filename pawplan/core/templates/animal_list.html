@@ -3,50 +3,79 @@
 {% block content %}
 
 <html>
-    <head>
-        <script src="https://unpkg.com/htmx.org@1.9.10"></script>
-        <link rel="stylesheet" href="{% static 'css/animal_list.css' %}">
-    </head>
-    <body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
-        <div class = "content-container">
-            <div class="column">
-                <div>Location</div>
-                <ul>
-                    {% for option in locationOptions %}
-                    <li><input hx-get="{% url 'animals' %}" 
+<head>
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+    <link rel="stylesheet" href="{% static 'css/animal_list.css' %}">
+    <style>
+        .options-box {
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .options-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .options-list {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        .options-list li {
+            margin-bottom: 5px;
+        }
+
+    </style>
+</head>
+<body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="options-box">
+                    <div class="options-title">Location</div>
+                    <ul class="options-list">
+                        {% for option in locationOptions %}
+                        <li><input hx-get="{% url 'animals' %}" 
                             hx-trigger="click" 
                             hx-target="#animals" 
                             hx-include="[name='color'], [name='location'], [name='sex']" 
                             name="location" type="checkbox" value="{{ option }}">{{ option }}</li>
-                    {% endfor %}
-                </ul>
-                <div>Color</div>
-                <ul>
-                    {% for option in colorOptions %}
-                    <li><input hx-get="{% url 'animals' %}" 
-                        hx-trigger="click" 
-                        hx-target="#animals" 
-                        hx-include="[name='color'], [name='location'], [name='sex']" 
-                        name="color" type="checkbox" value="{{ option }}">{{ option }}</li>
-                    {% endfor %}
-                </ul>
-                <div>Sex</div>
-                <ul>
-                    {% for option in sexOptions %}
-                    <li><input hx-get="{% url 'animals' %}" 
-                        hx-trigger="click" 
-                        hx-target="#animals" 
-                        hx-include="[name='color'], [name='location'], [name='sex']" 
-                        name="sex" type="checkbox" value="{{ option }}">{{ option }}</li>
-                    {% endfor %}
-                </ul>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="options-box">
+                    <div class="options-title">Color</div>
+                    <ul class="options-list">
+                        {% for option in colorOptions %}
+                        <li><input hx-get="{% url 'animals' %}" 
+                            hx-trigger="click" 
+                            hx-target="#animals" 
+                            hx-include="[name='color'], [name='location'], [name='sex']" 
+                            name="color" type="checkbox" value="{{ option }}">{{ option }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="options-box">
+                    <div class="options-title">Sex</div>
+                    <ul class="options-list">
+                        {% for option in sexOptions %}
+                        <li><input hx-get="{% url 'animals' %}" 
+                            hx-trigger="click" 
+                            hx-target="#animals" 
+                            hx-include="[name='color'], [name='location'], [name='sex']" 
+                            name="sex" type="checkbox" value="{{ option }}">{{ option }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
             </div>
-            <div class="column">
-                <div id="animals" hx-get="{% url 'animals' %}"hx-trigger="load">
+            <div class="col-md-9">
+                <div id="animals" hx-get="{% url 'animals' %}" hx-trigger="load">
                 </div>
             </div>
         </div>
-    </body>
+    </div>
+</body>
 </html>
 
 {% endblock %}
