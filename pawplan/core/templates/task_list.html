@@ -19,7 +19,7 @@
                 </button>
                 {% if task.is_released and task.assignee.email != request.session.worker %}
                 <a href="{% url 'swap_task' task.id %}" class="btn btn-secondary">Pick Up</a>
-                {% elif not task.is_released and task.assignee.email == request.session.worker %}
+                {% elif not task.is_released and task.assignee.email == request.session.worker and not task.is_completed %}
                 <a href="{% url 'release_task' task.id %}" class="btn btn-secondary">Release</a>
                 {% endif %}
 
